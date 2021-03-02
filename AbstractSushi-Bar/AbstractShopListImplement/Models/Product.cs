@@ -1,0 +1,13 @@
+﻿using System.Collections.Generic;
+
+namespace AbstractSushi_BarListImplement.Models
+{
+    // Изделие, изготавливаемое в магазине
+    public class Product
+    {
+        public int Id { get; set; }
+        public string ProductName { get; set; }
+        public decimal Price { get; set; }
+        public Dictionary<int, int> ProductComponents { get; set; }
+    }
+}
