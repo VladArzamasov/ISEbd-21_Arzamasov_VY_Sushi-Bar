@@ -148,6 +148,10 @@
       <Project>{4190dac8-f1dd-4ce3-9c61-db631cec09e2}</Project>
       <Name>AbstractSushi-BarBusinessLogic</Name>
     </ProjectReference>
+    <ProjectReference Include="..\AbstractSushi_BarFileImplement\AbstractSushi_BarFileImplement.csproj">
+      <Project>{8defe89e-5bbd-48ce-9b06-25575c1178a9}</Project>
+      <Name>AbstractSushi_BarFileImplement</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AbstractSushi_BarListImplement\AbstractSushi_BarListImplement.csproj">
       <Project>{adabf8f1-da18-4dc4-95b0-0653ea413dec}</Project>
       <Name>AbstractSushi_BarListImplement</Name>
