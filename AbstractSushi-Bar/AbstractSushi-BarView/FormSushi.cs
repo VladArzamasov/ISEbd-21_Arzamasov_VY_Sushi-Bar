@@ -8,35 +8,34 @@ using Unity;
 
 namespace AbstractSushi_BarView
 {
-    public partial class FormProduct : Form
+    public partial class FormSushi : Form
     {
         [Dependency]
         public new IUnityContainer Container { get; set; }
         public int Id { set { id = value; } }
-        private readonly ProductLogic logic;
+        private readonly SushiLogic logic;
         private int? id;
-        private Dictionary<int, (string, int)> productComponents;
-        public FormProduct(ProductLogic service)
+        private Dictionary<int, (string, int)> sushiComponents;
+        public FormSushi(SushiLogic service)
         {
             InitializeComponent();
             this.logic = service;
         }
-        private void FormProduct_Load(object sender, EventArgs e)
+        private void FormSushi_Load(object sender, EventArgs e)
         {
             if (id.HasValue)
             {
                 try
                 {
-                    ProductViewModel view = logic.Read(new ProductBindingModel
+                    SushiViewModel view = logic.Read(new SushiBindingModel
                     {
-                        Id =
-id.Value
+                        Id = id.Value
                     })?[0];
                     if (view != null)
                     {
-                        textBoxName.Text = view.ProductName;
+                        textBoxName.Text = view.SushiName;
                         textBoxPrice.Text = view.Price.ToString();
-                        productComponents = view.ProductComponents;
+                        sushiComponents = view.SushiComponents;
                         LoadData();
                     }
                 }
@@ -48,20 +47,19 @@ id.Value
             }
             else
             {
-                productComponents = new Dictionary<int, (string, int)>();
+                sushiComponents = new Dictionary<int, (string, int)>();
             }
         }
         private void LoadData()
         {
             try
             {
-                if (productComponents != null)
+                if (sushiComponents != null)
                 {
                     dataGridView.Rows.Clear();
-                    foreach (var pc in productComponents)
+                    foreach (var pc in sushiComponents)
                     {
-                        dataGridView.Rows.Add(new object[] { pc.Key, pc.Value.Item1,
-pc.Value.Item2 });
+                        dataGridView.Rows.Add(new object[] { pc.Key, pc.Value.Item1, pc.Value.Item2 });
                     }
                 }
             }
@@ -73,16 +71,16 @@ pc.Value.Item2 });
         }
         private void ButtonAdd_Click(object sender, EventArgs e)
         {
-            var form = Container.Resolve<FormProductComponent>();
+            var form = Container.Resolve<FormSushiComponent>();
             if (form.ShowDialog() == DialogResult.OK)
             {
-                if (productComponents.ContainsKey(form.Id))
+                if (sushiComponents.ContainsKey(form.Id))
                 {
-                    productComponents[form.Id] = (form.ComponentName, form.Count);
+                    sushiComponents[form.Id] = (form.ComponentName, form.Count);
                 }
                 else
                 {
-                    productComponents.Add(form.Id, (form.ComponentName, form.Count));
+                    sushiComponents.Add(form.Id, (form.ComponentName, form.Count));
                 }
                 LoadData();
             }
@@ -91,13 +89,13 @@ pc.Value.Item2 });
         {
             if (dataGridView.SelectedRows.Count == 1)
             {
-                var form = Container.Resolve<FormProductComponent>();
+                var form = Container.Resolve<FormSushiComponent>();
                 int id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
                 form.Id = id;
-                form.Count = productComponents[id].Item2;
+                form.Count = sushiComponents[id].Item2;
                 if (form.ShowDialog() == DialogResult.OK)
                 {
-                    productComponents[form.Id] = (form.ComponentName, form.Count);
+                    sushiComponents[form.Id] = (form.ComponentName, form.Count);
                     LoadData();
                 }
             }
@@ -112,7 +110,7 @@ pc.Value.Item2 });
                     try
                     {
 
-                        productComponents.Remove(Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value));
+                        sushiComponents.Remove(Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value));
                     }
                     catch (Exception ex)
                     {
@@ -141,7 +139,7 @@ pc.Value.Item2 });
                MessageBoxIcon.Error);
                 return;
             }
-            if (productComponents == null || productComponents.Count == 0)
+            if (sushiComponents == null || sushiComponents.Count == 0)
             {
                 MessageBox.Show("Заполните компоненты", "Ошибка", MessageBoxButtons.OK,
                MessageBoxIcon.Error);
@@ -149,12 +147,12 @@ pc.Value.Item2 });
             }
             try
             {
-                logic.CreateOrUpdate(new ProductBindingModel
+                logic.CreateOrUpdate(new SushiBindingModel
                 {
                     Id = id,
-                    ProductName = textBoxName.Text,
+                    SushiName = textBoxName.Text,
                     Price = Convert.ToDecimal(textBoxPrice.Text),
-                    ProductComponents = productComponents
+                    SushiComponents = sushiComponents
                 });
                 MessageBox.Show("Сохранение прошло успешно", "Сообщение",
                MessageBoxButtons.OK, MessageBoxIcon.Information);

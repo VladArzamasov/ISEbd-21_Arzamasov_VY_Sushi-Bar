@@ -3,11 +3,11 @@
 namespace AbstractSushi_BarBusinessLogic.BindingModels
 {
     // Изделие, изготавливаемое в суши-баре
-    public class ProductBindingModel
+    public class SushiBindingModel
     {
         public int? Id { get; set; }
-        public string ProductName { get; set; }
+        public string SushiName { get; set; }
         public decimal Price { get; set; }
-        public Dictionary<int, (string, int)> ProductComponents { get; set; }
+        public Dictionary<int, (string, int)> SushiComponents { get; set; }
     }
 }

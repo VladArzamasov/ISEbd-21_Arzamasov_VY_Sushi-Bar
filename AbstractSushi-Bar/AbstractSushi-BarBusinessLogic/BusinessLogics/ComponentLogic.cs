@@ -21,8 +21,7 @@ namespace AbstractSushi_BarBusinessLogic.BusinessLogics
             }
             if (model.Id.HasValue)
             {
-                return new List<ComponentViewModel> { _componentStorage.GetElement(model)
-};
+                return new List<ComponentViewModel> { _componentStorage.GetElement(model)};
             }
             return _componentStorage.GetFilteredList(model);
         }
@@ -49,8 +48,7 @@ namespace AbstractSushi_BarBusinessLogic.BusinessLogics
         {
             var element = _componentStorage.GetElement(new ComponentBindingModel
             {
-                Id =
-           model.Id
+                Id = model.Id
             });
             if (element == null)
             {

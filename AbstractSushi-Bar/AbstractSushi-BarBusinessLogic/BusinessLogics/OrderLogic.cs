@@ -30,7 +30,7 @@ namespace AbstractSushi_BarBusinessLogic.BusinessLogics
         {
             _orderStorage.Insert(new OrderBindingModel
             {
-                ProductId = model.ProductId,
+                SushiId = model.SushiId,
                 Count = model.Count,
                 Sum = model.Sum,
                 DateCreate = DateTime.Now,
@@ -41,8 +41,7 @@ namespace AbstractSushi_BarBusinessLogic.BusinessLogics
         {
             var order = _orderStorage.GetElement(new OrderBindingModel
             {
-                Id =
-           model.OrderId
+                Id = model.OrderId
             });
             if (order == null)
             {
@@ -55,7 +54,7 @@ namespace AbstractSushi_BarBusinessLogic.BusinessLogics
             _orderStorage.Update(new OrderBindingModel
             {
                 Id = order.Id,
-                ProductId = order.ProductId,
+                SushiId = order.SushiId,
                 Count = order.Count,
                 Sum = order.Sum,
                 DateCreate = order.DateCreate,
@@ -67,8 +66,7 @@ namespace AbstractSushi_BarBusinessLogic.BusinessLogics
         {
             var order = _orderStorage.GetElement(new OrderBindingModel
             {
-                Id =
-           model.OrderId
+                Id = model.OrderId
             });
             if (order == null)
             {
@@ -81,7 +79,7 @@ namespace AbstractSushi_BarBusinessLogic.BusinessLogics
             _orderStorage.Update(new OrderBindingModel
             {
                 Id = order.Id,
-                ProductId = order.ProductId,
+                SushiId = order.SushiId,
                 Count = order.Count,
                 Sum = order.Sum,
                 DateCreate = order.DateCreate,
@@ -103,7 +101,7 @@ namespace AbstractSushi_BarBusinessLogic.BusinessLogics
             _orderStorage.Update(new OrderBindingModel
             {
                 Id = order.Id,
-                ProductId = order.ProductId,
+                SushiId = order.SushiId,
                 Count = order.Count,
                 Sum = order.Sum,
                 DateCreate = order.DateCreate,

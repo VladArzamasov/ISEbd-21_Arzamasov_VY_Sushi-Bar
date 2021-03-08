@@ -79,17 +79,23 @@
     <Compile Include="FormCreateOrder.Designer.cs">
       <DependentUpon>FormCreateOrder.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormProduct.cs">
+    <Compile Include="FormSushi.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormProduct.Designer.cs">
-      <DependentUpon>FormProduct.cs</DependentUpon>
+    <Compile Include="FormSushi.Designer.cs">
+      <DependentUpon>FormSushi.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormProductComponent.cs">
+    <Compile Include="FormSushiComponent.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormProductComponent.Designer.cs">
-      <DependentUpon>FormProductComponent.cs</DependentUpon>
+    <Compile Include="FormSushiComponent.Designer.cs">
+      <DependentUpon>FormSushiComponent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormSushis.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSushis.Designer.cs">
+      <DependentUpon>FormSushis.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -105,11 +111,14 @@
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormProduct.resx">
-      <DependentUpon>FormProduct.cs</DependentUpon>
+    <EmbeddedResource Include="FormSushi.resx">
+      <DependentUpon>FormSushi.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormProductComponent.resx">
-      <DependentUpon>FormProductComponent.cs</DependentUpon>
+    <EmbeddedResource Include="FormSushiComponent.resx">
+      <DependentUpon>FormSushiComponent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSushis.resx">
+      <DependentUpon>FormSushis.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -135,13 +144,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AbstractShopListImplement\AbstractSushi-BarListImplement.csproj">
-      <Project>{ca307a1f-0580-48a9-b969-bbd3f3b1c31b}</Project>
-      <Name>AbstractSushi-BarListImplement</Name>
-    </ProjectReference>
     <ProjectReference Include="..\AbstractSushi-BarBusinessLogic\AbstractSushi-BarBusinessLogic.csproj">
       <Project>{4190dac8-f1dd-4ce3-9c61-db631cec09e2}</Project>
       <Name>AbstractSushi-BarBusinessLogic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AbstractSushi_BarListImplement\AbstractSushi_BarListImplement.csproj">
+      <Project>{adabf8f1-da18-4dc4-95b0-0653ea413dec}</Project>
+      <Name>AbstractSushi_BarListImplement</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

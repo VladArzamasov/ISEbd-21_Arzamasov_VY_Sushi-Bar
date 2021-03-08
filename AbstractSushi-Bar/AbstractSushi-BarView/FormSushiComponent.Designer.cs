@@ -1,6 +1,6 @@
 ﻿namespace AbstractSushi_BarView
 {
-    partial class FormProductComponent
+    partial class FormSushiComponent
     {
         /// <summary>
         /// Required designer variable.

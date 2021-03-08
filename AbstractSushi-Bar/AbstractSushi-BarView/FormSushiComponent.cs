@@ -7,7 +7,7 @@ using Unity;
 
 namespace AbstractSushi_BarView
 {
-    public partial class FormProductComponent : Form
+    public partial class FormSushiComponent : Form
     {
         [Dependency]
         public new IUnityContainer Container { get; set; }
@@ -25,7 +25,7 @@ namespace AbstractSushi_BarView
                 textBoxCount.Text = value.ToString();
             }
         }
-        public FormProductComponent(ComponentLogic logic)
+        public FormSushiComponent(ComponentLogic logic)
         {
             InitializeComponent();
             List<ComponentViewModel> list = logic.Read(null);

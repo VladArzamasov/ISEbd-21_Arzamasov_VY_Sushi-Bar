@@ -1,6 +1,6 @@
 ﻿namespace AbstractSushi_BarView
 {
-    partial class FormProduct
+    partial class FormSushi
     {
         /// <summary>
         /// Required designer variable.
@@ -206,7 +206,7 @@
             this.Controls.Add(this.labelName);
             this.Name = "FormProduct";
             this.Text = "Изделие";
-            this.Load += new System.EventHandler(this.FormProduct_Load);
+            this.Load += new System.EventHandler(this.FormSushi_Load);
             this.groupBoxComponents.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
             this.ResumeLayout(false);

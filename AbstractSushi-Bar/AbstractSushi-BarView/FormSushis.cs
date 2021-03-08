@@ -6,18 +6,17 @@ using Unity;
 
 namespace AbstractSushi_BarView
 {
-    public partial class FormComponents : Form
+    public partial class FormSushis : Form
     {
         [Dependency]
         public new IUnityContainer Container { get; set; }
-        private readonly ComponentLogic logic;
-        public FormComponents(ComponentLogic logic)
+        private readonly SushiLogic logic;
+        public FormSushis(SushiLogic logic)
         {
             InitializeComponent();
             this.logic = logic;
         }
-
-        private void FormComponents_Load(object sender, EventArgs e)
+        private void FormSushis_Load(object sender, EventArgs e)
         {
             LoadData();
         }
@@ -35,22 +34,23 @@ namespace AbstractSushi_BarView
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
+               MessageBoxIcon.Error);
             }
         }
-        private void ButtonAdd_Click(object sender, EventArgs e)
+        private void buttonAdd_Click(object sender, EventArgs e)
         {
-            var form = Container.Resolve<FormComponent>();
+            var form = Container.Resolve<FormSushi>();
             if (form.ShowDialog() == DialogResult.OK)
             {
                 LoadData();
             }
         }
-        private void ButtonUpd_Click(object sender, EventArgs e)
+        private void buttonUpd_Click(object sender, EventArgs e)
         {
             if (dataGridView.SelectedRows.Count == 1)
             {
-                var form = Container.Resolve<FormComponent>();
+                var form = Container.Resolve<FormSushi>();
                 form.Id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
                 if (form.ShowDialog() == DialogResult.OK)
                 {
@@ -58,7 +58,7 @@ namespace AbstractSushi_BarView
                 }
             }
         }
-        private void ButtonDel_Click(object sender, EventArgs e)
+        private void buttonDel_Click(object sender, EventArgs e)
         {
             if (dataGridView.SelectedRows.Count == 1)
             {
@@ -68,17 +68,18 @@ namespace AbstractSushi_BarView
                     int id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
                     try
                     {
-                        logic.Delete(new ComponentBindingModel { Id = id });
+                        logic.Delete(new SushiBindingModel { Id = id });
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
+                       MessageBoxIcon.Error);
                     }
                     LoadData();
                 }
             }
         }
-        private void ButtonRef_Click(object sender, EventArgs e)
+        private void buttonRef_Click(object sender, EventArgs e)
         {
             LoadData();
         }

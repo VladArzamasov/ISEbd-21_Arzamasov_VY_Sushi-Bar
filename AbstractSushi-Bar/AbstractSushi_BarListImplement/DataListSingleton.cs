@@ -8,12 +8,12 @@ namespace AbstractSushi_BarListImplement
         private static DataListSingleton instance;
         public List<Component> Components { get; set; }
         public List<Order> Orders { get; set; }
-        public List<Product> Products { get; set; }
+        public List<Sushi> Sushi { get; set; }
         private DataListSingleton()
         {
             Components = new List<Component>();
             Orders = new List<Order>();
-            Products = new List<Product>();
+            Sushi = new List<Sushi>();
         }
         public static DataListSingleton GetInstance()
         {

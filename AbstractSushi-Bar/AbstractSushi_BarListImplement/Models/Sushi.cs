@@ -3,11 +3,11 @@
 namespace AbstractSushi_BarListImplement.Models
 {
     // Изделие, изготавливаемое в магазине
-    public class Product
+    public class Sushi
     {
         public int Id { get; set; }
-        public string ProductName { get; set; }
+        public string SushiName { get; set; }
         public decimal Price { get; set; }
-        public Dictionary<int, int> ProductComponents { get; set; }
+        public Dictionary<int, int> SushiComponents { get; set; }
     }
 }

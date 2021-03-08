@@ -47,8 +47,7 @@ namespace AbstractSushi_BarListImplement.Implements
             }
             foreach (var component in source.Components)
             {
-                if (component.Id == model.Id || component.ComponentName ==
-               model.ComponentName)
+                if (component.Id == model.Id || component.ComponentName == model.ComponentName)
                 {
                     return CreateModel(component);
                 }
