@@ -54,7 +54,7 @@ namespace AbstractSushi_BarFileImplement.Implements
                 throw new Exception("Элемент не найден");
             }
             CreateModel(model, element);
-        }
+        } 
         public void Delete(ComponentBindingModel model)
         {
             Component element = source.Components.FirstOrDefault(rec => rec.Id ==
