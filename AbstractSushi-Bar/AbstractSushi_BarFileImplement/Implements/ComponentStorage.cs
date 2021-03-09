@@ -25,10 +25,7 @@ namespace AbstractSushi_BarFileImplement.Implements
             {
                 return null;
             }
-            return source.Components
-            .Where(rec => rec.ComponentName.Contains(model.ComponentName))
-           .Select(CreateModel)
-            .ToList();
+            return source.Components.Where(rec => rec.ComponentName.Contains(model.ComponentName)).Select(CreateModel).ToList();
         }
         public ComponentViewModel GetElement(ComponentBindingModel model)
         {
@@ -36,8 +33,7 @@ namespace AbstractSushi_BarFileImplement.Implements
             {
                 return null;
             }
-            var component = source.Components
-            .FirstOrDefault(rec => rec.ComponentName == model.ComponentName || rec.Id == model.Id);
+            var component = source.Components.FirstOrDefault(rec => rec.ComponentName == model.ComponentName || rec.Id == model.Id);
             return component != null ? CreateModel(component) : null;
         }
         public void Insert(ComponentBindingModel model)
@@ -57,8 +53,7 @@ namespace AbstractSushi_BarFileImplement.Implements
         } 
         public void Delete(ComponentBindingModel model)
         {
-            Component element = source.Components.FirstOrDefault(rec => rec.Id ==
-           model.Id);
+            Component element = source.Components.FirstOrDefault(rec => rec.Id == model.Id);
             if (element != null)
             {
                 source.Components.Remove(element);

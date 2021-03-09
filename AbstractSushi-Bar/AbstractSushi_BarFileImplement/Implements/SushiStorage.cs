@@ -101,9 +101,8 @@ namespace AbstractSushi_BarFileImplement.Implements
                 SushiName = sushi.SushiName,
                 Price = sushi.Price,
                 SushiComponents = sushi.SushiComponents
-.ToDictionary(recPC => recPC.Key, recPC =>
- (source.Components.FirstOrDefault(recC => recC.Id ==
-recPC.Key)?.ComponentName, recPC.Value))
+                .ToDictionary(recPC => recPC.Key, recPC => (source.Components
+                .FirstOrDefault(recC => recC.Id ==recPC.Key)?.ComponentName, recPC.Value))
             };
         }
     }
