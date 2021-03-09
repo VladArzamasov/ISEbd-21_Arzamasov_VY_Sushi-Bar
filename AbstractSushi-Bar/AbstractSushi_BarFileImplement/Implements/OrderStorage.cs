@@ -28,6 +28,7 @@ namespace AbstractSushi_BarFileImplement.Implements
                 Id = order.Id,
                 SushiName = sourse.Sushi.FirstOrDefault(sushi => sushi.Id == order.SushiId)?.SushiName,
                 SushiId = order.SushiId,
+                Count = order.Count,
                 Sum = order.Sum,
                 Status = order.Status,
                 DateCreate = order.DateCreate,
