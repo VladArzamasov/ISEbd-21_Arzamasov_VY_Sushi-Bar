@@ -17,9 +17,7 @@ namespace AbstractSushi_BarFileImplement.Implements
         }
         public List<ComponentViewModel> GetFullList()
         {
-            return source.Components
-            .Select(CreateModel)
-           .ToList();
+            return source.Components.Select(CreateModel).ToList();
         }
         public List<ComponentViewModel> GetFilteredList(ComponentBindingModel model)
         {
@@ -39,14 +37,12 @@ namespace AbstractSushi_BarFileImplement.Implements
                 return null;
             }
             var component = source.Components
-            .FirstOrDefault(rec => rec.ComponentName == model.ComponentName ||
-           rec.Id == model.Id);
+            .FirstOrDefault(rec => rec.ComponentName == model.ComponentName || rec.Id == model.Id);
             return component != null ? CreateModel(component) : null;
         }
         public void Insert(ComponentBindingModel model)
         {
-            int maxId = source.Components.Count > 0 ? source.Components.Max(rec =>
-           rec.Id) : 0;
+            int maxId = source.Components.Count > 0 ? source.Components.Max(rec => rec.Id) : 0;
             var element = new Component { Id = maxId + 1 };
             source.Components.Add(CreateModel(model, element));
         }
