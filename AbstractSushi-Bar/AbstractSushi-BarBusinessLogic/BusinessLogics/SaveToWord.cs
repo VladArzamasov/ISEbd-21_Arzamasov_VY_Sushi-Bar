@@ -19,8 +19,8 @@ namespace AbstractSushi_BarBusinessLogic.BusinessLogics
                 Body docBody = mainPart.Document.AppendChild(new Body());
                 docBody.AppendChild(CreateParagraph(new WordParagraph
                 {
-                    Texts = new List<(string, WordTextProperties)> { (info.Title, new WordTextProperties {Bold = true, Size = "24", } ) },
-                    TextProperties = new WordTextProperties
+                    Texts = new List<(string, WordParagraphProperties)> { (info.Title, new WordParagraphProperties { Bold = true, Size = "24", } ) },
+                    TextProperties = new WordParagraphProperties
                     {
                         Size = "24",
                         JustificationValues = JustificationValues.Center
@@ -30,9 +30,9 @@ namespace AbstractSushi_BarBusinessLogic.BusinessLogics
                 {
                     docBody.AppendChild(CreateParagraph(new WordParagraph
                     {
-                        Texts = new List<(string, WordTextProperties)> {
-(component.ComponentName, new WordTextProperties { Size = "24", }) },
-                        TextProperties = new WordTextProperties
+                        Texts = new List<(string, WordParagraphProperties)> {
+(component.ComponentName, new WordParagraphProperties { Size = "24", }) },
+                        TextProperties = new WordParagraphProperties
                         {
                             Size = "24",
                             JustificationValues = JustificationValues.Both
@@ -85,7 +85,7 @@ namespace AbstractSushi_BarBusinessLogic.BusinessLogics
             return null;
         }
         // Задание форматирования для абзаца
-        private static ParagraphProperties CreateParagraphProperties(WordTextProperties
+        private static ParagraphProperties CreateParagraphProperties(WordParagraphProperties
        paragraphProperties)
         {
             if (paragraphProperties != null)
