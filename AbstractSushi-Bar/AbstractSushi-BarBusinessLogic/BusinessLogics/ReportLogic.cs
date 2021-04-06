@@ -2,6 +2,7 @@
 using AbstractSushi_BarBusinessLogic.HelperModels;
 using AbstractSushi_BarBusinessLogic.Interfaces;
 using AbstractSushi_BarBusinessLogic.ViewModels;
+using AbstractSushi_BarBusinessLogic.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,22 +27,21 @@ namespace AbstractSushi_BarBusinessLogic.BusinessLogics
             var components = _componentStorage.GetFullList();
             var sushis = _sushiStorage.GetFullList();
             var list = new List<ReportSushiComponentViewModel>();
-            foreach (var component in components)
+            foreach (var sushi in sushis)
             {
                 var record = new ReportSushiComponentViewModel
                 {
-                    ComponentName = component.ComponentName,
-                    Sushis = new List<Tuple<string, int>>(),
+                    SushiName = sushi.SushiName,
+                    Components = new List<Tuple<string, int>>(),
                     TotalCount = 0
                 };
-                foreach (var sushi in sushis)
+                foreach (var component in components)
                 {
                     if (sushi.SushiComponents.ContainsKey(component.Id))
                     {
-                        record.Sushis.Add(new Tuple<string, int>(sushi.SushiName,
+                        record.Components.Add(new Tuple<string, int>(component.ComponentName,
                        sushi.SushiComponents[component.Id].Item2));
-                        record.TotalCount +=
-                       sushi.SushiComponents[component.Id].Item2;
+                        record.TotalCount += sushi.SushiComponents[component.Id].Item2;
                     }
                 }
                 list.Add(record);
@@ -53,8 +53,7 @@ namespace AbstractSushi_BarBusinessLogic.BusinessLogics
         {
             return _orderStorage.GetFilteredList(new OrderBindingModel
             {
-                DateFrom =
-           model.DateFrom,
+                DateFrom = model.DateFrom,
                 DateTo = model.DateTo
             })
             .Select(x => new ReportOrdersViewModel
@@ -63,18 +62,18 @@ namespace AbstractSushi_BarBusinessLogic.BusinessLogics
                 SushiName = x.SushiName,
                 Count = x.Count,
                 Sum = x.Sum,
-                Status = x.Status
+                Status = ((OrderStatus)Enum.Parse(typeof(OrderStatus), x.Status.ToString())).ToString()
             })
            .ToList();
         }
         // Сохранение компонент в файл-Word
-        public void SaveComponentsToWordFile(ReportBindingModel model)
+        public void SaveSushisToWordFile(ReportBindingModel model)
         {
             SaveToWord.CreateDoc(new WordInfo
             {
                 FileName = model.FileName,
-                Title = "Список компонент",
-                Components = _componentStorage.GetFullList()
+                Title = "Список суши",
+                Sushis = _sushiStorage.GetFullList()
             });
         }
         // Сохранение компонент с указаеним продуктов в файл-Excel
@@ -83,7 +82,7 @@ namespace AbstractSushi_BarBusinessLogic.BusinessLogics
             SaveToExcel.CreateDoc(new ExcelInfo
             {
                 FileName = model.FileName,
-                Title = "Список компонент",
+                Title = "Список суши",
                 SushiComponents = GetSushiComponent()
             });
         }

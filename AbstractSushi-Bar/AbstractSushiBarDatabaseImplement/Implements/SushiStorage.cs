@@ -67,7 +67,7 @@ namespace AbstractSushiBarDatabaseImplement.Implements
                 var sushi = context.Sushi
                 .Include(rec => rec.SushiComponents)
                .ThenInclude(rec => rec.Component)
-               .FirstOrDefault(rec => rec.SushiName.Equals(model.SushiComponents) || rec.Id == model.Id);
+               .FirstOrDefault(rec => rec.SushiName.Equals(model.SushiName) || rec.Id == model.Id);
                 return sushi != null ?
                 new SushiViewModel
                 {
@@ -91,6 +91,7 @@ namespace AbstractSushiBarDatabaseImplement.Implements
                         Sushi sushi = CreateModel(model, new Sushi());
                         context.Sushi.Add(sushi);
                         context.SaveChanges();
+                        CreateModel(model, sushi, context);
                         transaction.Commit();
                     }
                     catch
@@ -178,7 +179,7 @@ namespace AbstractSushiBarDatabaseImplement.Implements
                     ComponentId = sc.Key,
                     Count = sc.Value.Item2
                 });
-                context.SaveChanges();
+                    context.SaveChanges();
             }
             return sushi;
         }

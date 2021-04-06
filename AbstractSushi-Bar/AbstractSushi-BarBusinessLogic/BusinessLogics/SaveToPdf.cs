@@ -30,7 +30,7 @@ namespace AbstractSushi_BarBusinessLogic.BusinessLogics
             CreateRow(new PdfRowParameters
             {
                 Table = table,
-                Texts = new List<string> { "Дата заказа", "Изделие", "Количество", "Сумма", "Статус" },
+                Texts = new List<string> { "Дата заказа", "Суши", "Количество", "Сумма", "Статус" },
                 Style = "NormalTitle",
                 ParagraphAlignment = ParagraphAlignment.Center
             });

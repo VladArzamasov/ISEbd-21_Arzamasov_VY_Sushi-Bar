@@ -26,12 +26,13 @@ namespace AbstractSushi_BarBusinessLogic.BusinessLogics
                         JustificationValues = JustificationValues.Center
                     }
                 }));
-                foreach (var component in info.Components)
+                foreach (var sushi in info.Sushis)
                 {
                     docBody.AppendChild(CreateParagraph(new WordParagraph
                     {
                         Texts = new List<(string, WordParagraphProperties)> {
-(component.ComponentName, new WordParagraphProperties { Size = "24", }) },
+                        (sushi.SushiName + " : ", new WordParagraphProperties {Bold = true, Size = "24", }),
+                        (sushi.Price.ToString(), new WordParagraphProperties {Bold = false, Size = "24", }) },
                         TextProperties = new WordParagraphProperties
                         {
                             Size = "24",

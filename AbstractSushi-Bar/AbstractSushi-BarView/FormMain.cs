@@ -1,5 +1,6 @@
 ﻿using AbstractSushi_BarBusinessLogic.BindingModels;
 using AbstractSushi_BarBusinessLogic.BusinessLogics;
+using Microsoft.Reporting.WebForms;
 using System;
 using System.Windows.Forms;
 using Unity;
@@ -11,10 +12,12 @@ namespace AbstractSushi_BarView
         [Dependency]
         public new IUnityContainer Container { get; set; }
         private readonly OrderLogic _orderLogic;
-        public FormMain(OrderLogic orderLogic)
+        private ReportLogic report;
+        public FormMain(OrderLogic orderLogic, ReportLogic Report)
         {
             InitializeComponent();
             this._orderLogic = orderLogic;
+            report = Report;
         }
 
         private void FormMain_Load(object sender, EventArgs e)
@@ -112,6 +115,31 @@ namespace AbstractSushi_BarView
         private void buttonRef_Click(object sender, EventArgs e)
         {
             LoadData();
+        }
+        private void ComponentsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (var dialog = new SaveFileDialog { Filter = "docx|*.docx" })
+            {
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    report.SaveSushisToWordFile(new ReportBindingModel
+                    {
+                        FileName = dialog.FileName
+                    });
+                    MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK,
+                   MessageBoxIcon.Information);
+                }
+            }
+        }
+        private void ComponentSushiToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Container.Resolve<FormReportSushiComponents>();
+            form.ShowDialog();
+        }
+        private void OrdersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Container.Resolve<FormReportOrders>();
+            form.ShowDialog();
         }
     }
 }

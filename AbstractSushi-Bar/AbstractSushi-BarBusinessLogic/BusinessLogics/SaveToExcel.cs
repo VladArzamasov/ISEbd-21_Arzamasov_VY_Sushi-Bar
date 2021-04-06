@@ -68,11 +68,11 @@ namespace AbstractSushi_BarBusinessLogic.BusinessLogics
                         ShareStringPart = shareStringPart,
                         ColumnName = "A",
                         RowIndex = rowIndex,
-                        Text = sc.ComponentName,
+                        Text = sc.SushiName,
                         StyleIndex = 0U
                     });
                     rowIndex++;
-                    foreach (var sushi in sc.Sushis)
+                    foreach (var component in sc.Components)
                     {
                         InsertCellInWorksheet(new ExcelCellParameters
                         {
@@ -80,7 +80,7 @@ namespace AbstractSushi_BarBusinessLogic.BusinessLogics
                             ShareStringPart = shareStringPart,
                             ColumnName = "B",
                             RowIndex = rowIndex,
-                            Text = sushi.Item1,
+                            Text = component.Item1,
                             StyleIndex = 1U
                         });
                         InsertCellInWorksheet(new ExcelCellParameters
@@ -89,7 +89,7 @@ namespace AbstractSushi_BarBusinessLogic.BusinessLogics
                             ShareStringPart = shareStringPart,
                             ColumnName = "C",
                             RowIndex = rowIndex,
-                            Text = sushi.Item2.ToString(),
+                            Text = component.Item2.ToString(),
                             StyleIndex = 1U
                         });
                         rowIndex++;
@@ -172,8 +172,7 @@ namespace AbstractSushi_BarBusinessLogic.BusinessLogics
             });
             BottomBorder bottomBorder = new BottomBorder()
             {
-                Style =
-           BorderStyleValues.Thin
+                Style = BorderStyleValues.Thin
             };
             bottomBorder.Append(new DocumentFormat.OpenXml.Office2010.Excel.Color()
             {
