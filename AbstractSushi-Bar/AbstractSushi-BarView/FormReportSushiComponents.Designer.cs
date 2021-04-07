@@ -30,8 +30,8 @@
         {
             this.buttonSaveToExel = new System.Windows.Forms.Button();
             this.dataGridView = new System.Windows.Forms.DataGridView();
-            this.Component = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Sushi = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Component = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Col = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.SuspendLayout();
@@ -51,8 +51,8 @@
             this.dataGridView.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
             this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Component,
             this.Sushi,
+            this.Component,
             this.Col});
             this.dataGridView.Location = new System.Drawing.Point(0, 55);
             this.dataGridView.Name = "dataGridView";
@@ -61,19 +61,19 @@
             this.dataGridView.Size = new System.Drawing.Size(1013, 553);
             this.dataGridView.TabIndex = 1;
             // 
-            // Component
-            // 
-            this.Component.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Component.HeaderText = "Компонент";
-            this.Component.MinimumWidth = 8;
-            this.Component.Name = "Component";
-            // 
             // Sushi
             // 
             this.Sushi.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.Sushi.HeaderText = "Суши";
             this.Sushi.MinimumWidth = 8;
             this.Sushi.Name = "Sushi";
+            // 
+            // Component
+            // 
+            this.Component.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Component.HeaderText = "Компонент";
+            this.Component.MinimumWidth = 8;
+            this.Component.Name = "Component";
             // 
             // Col
             // 
@@ -101,8 +101,8 @@
 
         private System.Windows.Forms.Button buttonSaveToExel;
         private System.Windows.Forms.DataGridView dataGridView;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Component;
         private System.Windows.Forms.DataGridViewTextBoxColumn Sushi;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Component;
         private System.Windows.Forms.DataGridViewTextBoxColumn Col;
     }
 }
