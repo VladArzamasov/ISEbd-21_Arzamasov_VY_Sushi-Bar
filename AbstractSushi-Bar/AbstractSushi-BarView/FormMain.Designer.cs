@@ -96,14 +96,14 @@
             // 
             this.ComponentsToolStripMenuItem.Name = "ComponentsToolStripMenuItem";
             this.ComponentsToolStripMenuItem.Size = new System.Drawing.Size(327, 34);
-            this.ComponentsToolStripMenuItem.Text = "Список компонентов";
+            this.ComponentsToolStripMenuItem.Text = "Список изделий";
             this.ComponentsToolStripMenuItem.Click += new System.EventHandler(this.ComponentsToolStripMenuItem_Click);
             // 
             // ComponentSushiToolStripMenuItem
             // 
             this.ComponentSushiToolStripMenuItem.Name = "ComponentSushiToolStripMenuItem";
-            this.ComponentSushiToolStripMenuItem.Size = new System.Drawing.Size(327, 34);
-            this.ComponentSushiToolStripMenuItem.Text = "Компоненты по изделиям";
+            this.ComponentSushiToolStripMenuItem.Size = new System.Drawing.Size(325, 34);
+            this.ComponentSushiToolStripMenuItem.Text = "Изделия по компонентам";
             this.ComponentSushiToolStripMenuItem.Click += new System.EventHandler(this.ComponentSushiToolStripMenuItem_Click);
             // 
             // OrdersToolStripMenuItem

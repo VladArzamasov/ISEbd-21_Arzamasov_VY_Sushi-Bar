@@ -90,7 +90,7 @@
             this.Controls.Add(this.dataGridView);
             this.Controls.Add(this.buttonSaveToExel);
             this.Name = "FormReportSushiComponents";
-            this.Text = "Компоненты по изделиям";
+            this.Text = "Изделия по компонентам";
             this.Load += new System.EventHandler(this.FormReportSushiComponents_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
             this.ResumeLayout(false);

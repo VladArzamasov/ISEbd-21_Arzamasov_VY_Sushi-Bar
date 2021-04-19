@@ -49,14 +49,11 @@ namespace AbstractSushi_BarFileImplement.Implements
             {
                 return null;
             }
-
-            if (model.DateTo != null && model.DateFrom != null)
-            {
-                return sourse.Orders.Where(rec => rec.DateCreate >= model.DateFrom && rec.DateCreate <= model.DateTo)
+                return sourse.Orders
+                .Where(rec => (!model.DateFrom.HasValue && !model.DateTo.HasValue && rec.DateCreate == model.DateCreate) ||
+                (model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate.Date
+                >= model.DateFrom.Value.Date && rec.DateCreate.Date <= model.DateTo.Value.Date))
                     .Select(CreateModel).ToList();
-            }
-            return sourse.Orders.Where(rec => rec.SushiId.ToString().Contains(model.SushiId.ToString()))
-                .Select(CreateModel).ToList();
         }
         public OrderViewModel GetElement(OrderBindingModel model)
         {

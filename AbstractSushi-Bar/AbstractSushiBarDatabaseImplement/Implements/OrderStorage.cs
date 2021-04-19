@@ -5,6 +5,7 @@ using AbstractSushi_BarBusinessLogic.ViewModels;
 using AbstractSushi_BarBusinessLogic.BindingModels;
 using System.Linq;
 using AbstractSushiBarDatabaseImplement.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace AbstractSushiBarDatabaseImplement.Implements
 {
@@ -14,10 +15,10 @@ namespace AbstractSushiBarDatabaseImplement.Implements
         {
             using (var context = new AbstractSushiBarDatabase())
             {
-                return context.Orders.Select(rec => new OrderViewModel
+                return context.Orders.Include(rec => rec.Sushi).Select(rec => new OrderViewModel
                 {
                     Id = rec.Id,
-                    SushiName = context.Sushi.FirstOrDefault(r => r.Id == rec.SushiId).SushiName,
+                    SushiName = rec.Sushi.SushiName,
                     SushiId = rec.SushiId,
                     Count = rec.Count,
                     Sum = rec.Sum,
@@ -34,34 +35,16 @@ namespace AbstractSushiBarDatabaseImplement.Implements
             {
                 return null;
             }
-            if (model.DateFrom != null && model.DateTo != null)
-            {
-                using (var context = new AbstractSushiBarDatabase())
-                {
-                    return context.Orders
-                    .Where(rec => rec.DateCreate >= model.DateFrom && rec.DateCreate <= model.DateTo)
-                    .Select(rec => new OrderViewModel
-                    {
-                        Id = rec.Id,
-                        SushiName = context.Sushi.FirstOrDefault(r => r.Id == rec.SushiId).SushiName,
-                        SushiId = rec.SushiId,
-                        Count = rec.Count,
-                        Sum = rec.Sum,
-                        Status = rec.Status,
-                        DateCreate = rec.DateCreate,
-                        DateImplement = rec.DateImplement
-                    })
-                    .ToList();
-                }
-            }
             using (var context = new AbstractSushiBarDatabase())
             {
-                return context.Orders
-                .Where(rec => rec.Id.Equals(model.Id))
+                return context.Orders.Include(rec => rec.Sushi)
+                .Where(rec => (!model.DateFrom.HasValue && !model.DateTo.HasValue && rec.DateCreate == model.DateCreate) ||
+                (model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate.Date
+                >= model.DateFrom.Value.Date && rec.DateCreate.Date <= model.DateTo.Value.Date))
                 .Select(rec => new OrderViewModel
                 {
                     Id = rec.Id,
-                    SushiName = context.Sushi.FirstOrDefault(r => r.Id == rec.SushiId).SushiName,
+                    SushiName = rec.Sushi.SushiName,
                     SushiId = rec.SushiId,
                     Count = rec.Count,
                     Sum = rec.Sum,
@@ -80,13 +63,13 @@ namespace AbstractSushiBarDatabaseImplement.Implements
             }
             using (var context = new AbstractSushiBarDatabase())
             {
-                var order = context.Orders
+                var order = context.Orders.Include(rec => rec.Sushi)
                 .FirstOrDefault(rec => rec.Id == model.Id);
                 return order != null ?
                 new OrderViewModel
                 {
                     Id = order.Id,
-                    SushiName = context.Sushi.FirstOrDefault(r => r.Id == order.SushiId).SushiName,
+                    SushiName = order.Sushi.SushiName,
                     SushiId = order.SushiId,
                     Count = order.Count,
                     Sum = order.Sum,
