@@ -13,6 +13,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AbstractSushi_BarFileImplem
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AbstractSushiBarDatabaseImplement", "AbstractSushiBarDatabaseImplement\AbstractSushiBarDatabaseImplement.csproj", "{C5ABB815-E74B-4C23-81B9-759FEDE296CE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SushiBarRestApi", "SushiBarRestApi\SushiBarRestApi.csproj", "{3BBBF6F1-671C-419A-A786-F42174203A4C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SushiBarClientApp", "SushiBarClientApp\SushiBarClientApp.csproj", "{BC789EE8-875E-4EFF-A534-EB9C0107605E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +43,14 @@ Global
 		{C5ABB815-E74B-4C23-81B9-759FEDE296CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C5ABB815-E74B-4C23-81B9-759FEDE296CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C5ABB815-E74B-4C23-81B9-759FEDE296CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3BBBF6F1-671C-419A-A786-F42174203A4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BBBF6F1-671C-419A-A786-F42174203A4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BBBF6F1-671C-419A-A786-F42174203A4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BBBF6F1-671C-419A-A786-F42174203A4C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC789EE8-875E-4EFF-A534-EB9C0107605E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC789EE8-875E-4EFF-A534-EB9C0107605E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC789EE8-875E-4EFF-A534-EB9C0107605E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC789EE8-875E-4EFF-A534-EB9C0107605E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
