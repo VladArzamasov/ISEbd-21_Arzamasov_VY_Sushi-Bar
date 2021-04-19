@@ -30,26 +30,14 @@ namespace AbstractSushi_BarListImplement.Implements
             {
                 return null;
             }
-            List<OrderViewModel> result = new List<OrderViewModel>();
-            if (model.DateTo != null && model.DateFrom != null)
-            {
-                foreach (var order in source.Orders)
-                {
-                    if (order.DateCreate >= model.DateTo && order.DateCreate <= model.DateFrom)
-                    {
-                        result.Add(CreateModel(order));
-                    }
-                }
-                return result;
-            }
-            foreach (var order in source.Orders)
-            {
-                if (order.SushiId.ToString().Contains(model.SushiId.ToString()))
-                {
-                    result.Add(CreateModel(order));
-                }
-            }
-            return result;
+            return source.Orders
+            .Where(rec => (!model.DateFrom.HasValue && !model.DateTo.HasValue &&
+            rec.DateCreate.Date == model.DateCreate.Date) ||
+            (model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate.Date
+            >= model.DateFrom.Value.Date && rec.DateCreate.Date <= model.DateTo.Value.Date) ||
+            (model.ClientId.HasValue && rec.ClientId == model.ClientId))
+            .Select(CreateModel)
+            .ToList();
         }
         public OrderViewModel GetElement(OrderBindingModel model)
         {
@@ -59,7 +47,8 @@ namespace AbstractSushi_BarListImplement.Implements
             }
             foreach (var order in source.Orders)
             {
-                if (order.Id == model.Id)
+                if (order.Id == model.Id || order.SushiId ==
+                    model.SushiId)
                 {
                     return CreateModel(order);
                 }
@@ -109,6 +98,7 @@ namespace AbstractSushi_BarListImplement.Implements
         private Order CreateModel(OrderBindingModel model, Order order)
         {
             order.SushiId = model.SushiId;
+            order.ClientId = (int)model.ClientId;
             order.Count = model.Count;
             order.Sum = model.Sum;
             order.Status = model.Status;
@@ -118,11 +108,20 @@ namespace AbstractSushi_BarListImplement.Implements
         }
         private OrderViewModel CreateModel(Order order)
         {
+            string sushiName = null;
+            foreach (var sushi in source.Sushi)
+            {
+                if (sushi.Id == order.SushiId)
+                {
+                    sushiName = sushi.SushiName;
+                }
+            }
             return new OrderViewModel
             {
                 Id = order.Id,
+                ClientId = order.ClientId,
+                SushiName = sushiName,
                 SushiId = order.SushiId,
-                SushiName = source.Sushi.FirstOrDefault(sushi => sushi.Id == order.SushiId).SushiName,
                 Count = order.Count,
                 Sum = order.Sum,
                 Status = order.Status,

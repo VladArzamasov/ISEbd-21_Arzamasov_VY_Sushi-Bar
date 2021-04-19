@@ -15,14 +15,17 @@ namespace AbstractSushi_BarFileImplement
         private readonly string ComponentFileName = "Component.xml";
         private readonly string OrderFileName = "Order.xml";
         private readonly string SushiFileName = "Sushi.xml";
+        private readonly string ClientFileName = "Client.xml";
         public List<Component> Components { get; set; }
         public List<Order> Orders { get; set; }
         public List<Sushi> Sushi { get; set; }
+        public List<Client> Clients { get; set; }
         private FileDataListSingleton()
         {
             Components = LoadComponents();
             Orders = LoadOrders();
             Sushi = LoadSushi();
+            Clients = LoadClients();
         }
         public static FileDataListSingleton GetInstance()
         {
@@ -37,6 +40,7 @@ namespace AbstractSushi_BarFileImplement
             SaveComponents();
             SaveOrders();
             SaveSushi();
+            SaveClients();
         }
         private List<Component> LoadComponents()
         {
@@ -89,6 +93,7 @@ namespace AbstractSushi_BarFileImplement
                     list.Add(new Order
                     {
                         Id = Convert.ToInt32(order.Attribute("Id").Value),
+                        ClientId = Convert.ToInt32(order.Element("ClientId").Value),
                         SushiId = Convert.ToInt32(order.Element("SushiId").Value),
                         Count = Convert.ToInt32(order.Element("Count").Value),
                         Sum = Convert.ToDecimal(order.Element("Sum").Value),
@@ -128,6 +133,26 @@ namespace AbstractSushi_BarFileImplement
             }
             return list;
         }
+        private List<Client> LoadClients()
+        {
+            var list = new List<Client>();
+            if (File.Exists(ClientFileName))
+            {
+                XDocument xDocument = XDocument.Load(ClientFileName);
+                var xElements = xDocument.Root.Elements("Client").ToList();
+                foreach (var elem in xElements)
+                {
+                    list.Add(new Client
+                    {
+                        Id = Convert.ToInt32(elem.Attribute("Id").Value),
+                        ClientFIO = elem.Element("ClientFIO").Value,
+                        Email = elem.Element("Email").Value,
+                        Password = elem.Element("Password").Value,
+                    });
+                }
+            }
+            return list;
+        }
         private void SaveComponents()
         {
             if (Components != null)
@@ -152,6 +177,7 @@ namespace AbstractSushi_BarFileImplement
                 {
                     xElement.Add(new XElement("Order",
                         new XAttribute("Id", order.Id),
+                        new XElement("ClientId", order.ClientId),
                         new XElement("SushiId", order.SushiId),
                         new XElement("Count", order.Count),
                         new XElement("Sum", order.Sum),
@@ -161,6 +187,23 @@ namespace AbstractSushi_BarFileImplement
                 }
                 XDocument xDocument = new XDocument(xElement);
                 xDocument.Save(OrderFileName);
+            }
+        }
+        private void SaveClients()
+        {
+            if (Clients != null)
+            {
+                var xElement = new XElement("Clients");
+                foreach (var client in Clients)
+                {
+                    xElement.Add(new XElement("Client",
+                    new XAttribute("Id", client.Id),
+                    new XElement("ClientFIO", client.ClientFIO),
+                    new XElement("Email", client.Email),
+                    new XElement("Password", client.Password)));
+                }
+                XDocument xDocument = new XDocument(xElement);
+                xDocument.Save(ClientFileName);
             }
         }
         private void SaveSushi()

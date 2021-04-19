@@ -13,6 +13,7 @@ namespace AbstractSushi_BarFileImplement.Implements
         private readonly FileDataListSingleton sourse;
         private Order CreateModel(OrderBindingModel model, Order order)
         {
+            order.ClientId = (int)model.ClientId;
             order.SushiId = model.SushiId;
             order.Count = model.Count;
             order.Sum = model.Sum;
@@ -23,10 +24,12 @@ namespace AbstractSushi_BarFileImplement.Implements
         }
         private OrderViewModel CreateModel(Order order)
         {
+            Sushi sushi = sourse.Sushi.FirstOrDefault(rec => rec.Id == order.SushiId);
             return new OrderViewModel
             {
                 Id = order.Id,
-                SushiName = sourse.Sushi.FirstOrDefault(sushi => sushi.Id == order.SushiId)?.SushiName,
+                ClientId = order.ClientId,
+                SushiName = sushi.SushiName,
                 SushiId = order.SushiId,
                 Count = order.Count,
                 Sum = order.Sum,
@@ -49,14 +52,12 @@ namespace AbstractSushi_BarFileImplement.Implements
             {
                 return null;
             }
-
-            if (model.DateTo != null && model.DateFrom != null)
-            {
-                return sourse.Orders.Where(rec => rec.DateCreate >= model.DateFrom && rec.DateCreate <= model.DateTo)
-                    .Select(CreateModel).ToList();
-            }
-            return sourse.Orders.Where(rec => rec.SushiId.ToString().Contains(model.SushiId.ToString()))
-                .Select(CreateModel).ToList();
+            return sourse.Orders
+                .Where(rec => (model.ClientId.HasValue && rec.ClientId == model.ClientId) || (!model.DateFrom.HasValue && !model.DateTo.HasValue && rec.DateCreate == model.DateCreate) ||
+                 (model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate.Date
+                 >= model.DateFrom.Value.Date && rec.DateCreate.Date <= model.DateTo.Value.Date))
+                 .Select(CreateModel)
+                 .ToList();
         }
         public OrderViewModel GetElement(OrderBindingModel model)
         {
