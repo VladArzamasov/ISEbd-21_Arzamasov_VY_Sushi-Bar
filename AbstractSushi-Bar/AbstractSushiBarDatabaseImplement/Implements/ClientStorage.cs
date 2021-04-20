@@ -16,14 +16,8 @@ namespace AbstractSushiBarDatabaseImplement.Implements
         {
             using (var context = new AbstractSushiBarDatabase())
             {
-                return context.Clients.Select(rec => new ClientViewModel
-                {
-                    Id = rec.Id,
-                    ClientFIO = rec.ClientFIO,
-                    Email = rec.Email,
-                    Password = rec.Password,
-                })
-                .ToList();
+                return context.Clients
+                .Select(CreateModel).ToList();
             }
         }
 
@@ -35,16 +29,9 @@ namespace AbstractSushiBarDatabaseImplement.Implements
             }
             using (var context = new AbstractSushiBarDatabase())
             {
-                return context.Clients.Include(x => x.Order)
-                .Where(rec => rec.Email == model.Email && rec.Password == rec.Password)
-                .Select(rec => new ClientViewModel
-                {
-                    Id = rec.Id,
-                    ClientFIO = rec.ClientFIO,
-                    Email = rec.Email,
-                    Password = rec.Password,
-                })
-                .ToList();
+                return context.Clients
+                    .Where(rec => rec.ClientFIO.Contains(model.ClientFIO) || (rec.Email.Equals(model.Email) && rec.Password.Equals(model.Password)))
+                    .Select(CreateModel).ToList();
             }
         }
 
@@ -56,18 +43,9 @@ namespace AbstractSushiBarDatabaseImplement.Implements
             }
             using (var context = new AbstractSushiBarDatabase())
             {
-                var client = context.Clients.Include(x => x.Order)
-                .FirstOrDefault(rec => rec.Email == model.Email ||
-                rec.Id == model.Id);
-                return client != null ?
-                new ClientViewModel
-                {
-                    Id = client.Id,
-                    ClientFIO = client.ClientFIO,
-                    Email = client.Email,
-                    Password = client.Password,
-                } :
-                null;
+                var client = context.Clients
+                    .FirstOrDefault(rec => rec.Email.Equals(model.Email) || rec.Id == model.Id);
+                return client != null ? CreateModel(client) : null;
             }
         }
 
@@ -75,7 +53,7 @@ namespace AbstractSushiBarDatabaseImplement.Implements
         {
             using (var context = new AbstractSushiBarDatabase())
             {
-                context.Clients.Add(CreateModel(model, new Client(), context));
+                context.Clients.Add(CreateModel(model, new Client()));
                 context.SaveChanges();
             }
         }
@@ -89,7 +67,7 @@ namespace AbstractSushiBarDatabaseImplement.Implements
                 {
                     throw new Exception("Клиент не найден");
                 }
-                CreateModel(model, element, context);
+                CreateModel(model, element);
                 context.SaveChanges();
             }
         }
@@ -111,12 +89,23 @@ namespace AbstractSushiBarDatabaseImplement.Implements
             }
         }
 
-        private Client CreateModel(ClientBindingModel model, Client client, AbstractSushiBarDatabase database)
+        private Client CreateModel(ClientBindingModel model, Client client)
         {
             client.ClientFIO = model.ClientFIO;
             client.Email = model.Email;
             client.Password = model.Password;
             return client;
+        }
+
+        private ClientViewModel CreateModel(Client client)
+        {
+            return new ClientViewModel
+            {
+                Id = client.Id,
+                ClientFIO = client.ClientFIO,
+                Email = client.Email,
+                Password = client.Password
+            };
         }
     }
 }

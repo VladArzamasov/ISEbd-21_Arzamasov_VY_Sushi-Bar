@@ -3,6 +3,12 @@ using AbstractSushi_BarBusinessLogic.BusinessLogics;
 using AbstractSushi_BarBusinessLogic.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Unity;
 
@@ -14,11 +20,13 @@ namespace AbstractSushi_BarView
         public new IUnityContainer Container { get; set; }
         private readonly SushiLogic _logicP;
         private readonly OrderLogic _logicO;
-        public FormCreateOrder(SushiLogic logicP, OrderLogic logicO)
+        private readonly ClientLogic _logicClient;
+        public FormCreateOrder(SushiLogic logicP, OrderLogic logicO, ClientLogic logicClient)
         {
             InitializeComponent();
             _logicP = logicP;
             _logicO = logicO;
+            _logicClient = logicClient;
         }
         private void FormCreateOrder_Load(object sender, EventArgs e)
         {
@@ -32,6 +40,10 @@ namespace AbstractSushi_BarView
                     comboBoxSushi.DataSource = list;
                     comboBoxSushi.SelectedItem = null;
                 }
+                var clients = _logicClient.Read(null);
+                comboBoxClient.DataSource = clients;
+                comboBoxClient.DisplayMember = "ClientFIO";
+                comboBoxClient.ValueMember = "Id";
             }
             catch (Exception ex)
             {
@@ -69,14 +81,17 @@ namespace AbstractSushi_BarView
         }
         private void ButtonSave_Click(object sender, EventArgs e)
         {
+
             if (string.IsNullOrEmpty(textBoxCount.Text))
             {
-                MessageBox.Show("Заполните поле Количество", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Заполните поле Количество", "Ошибка",
+                MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             if (comboBoxSushi.SelectedValue == null)
             {
-                MessageBox.Show("Выберите изделие", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Выберите изделие", "Ошибка", MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
                 return;
             }
             try
@@ -85,15 +100,18 @@ namespace AbstractSushi_BarView
                 {
                     SushiId = Convert.ToInt32(comboBoxSushi.SelectedValue),
                     Count = Convert.ToInt32(textBoxCount.Text),
+                    ClientID = Convert.ToInt32(comboBoxClient.SelectedValue),
                     Sum = Convert.ToDecimal(textBoxSum.Text)
                 });
-                MessageBox.Show("Сохранение прошло успешно", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Сохранение прошло успешно", "Сообщение",
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
                 DialogResult = DialogResult.OK;
                 Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
             }
         }
         private void ButtonCancel_Click(object sender, EventArgs e)

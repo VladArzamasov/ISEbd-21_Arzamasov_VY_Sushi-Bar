@@ -37,7 +37,13 @@ namespace SushiBarClientApp.Controllers
             if (!string.IsNullOrEmpty(login) && !string.IsNullOrEmpty(password)
             && !string.IsNullOrEmpty(fio))
             {
-                //прописать запрос
+                APIClient.PostRequest("api/client/updatedata", new ClientBindingModel
+                {
+                    Id = Program.Client.Id,
+                    ClientFIO = fio,
+                    Email = login,
+                    Password = password
+                });
                 Program.Client.ClientFIO = fio;
                 Program.Client.Email = login;
                 Program.Client.Password = password;
@@ -46,8 +52,7 @@ namespace SushiBarClientApp.Controllers
             }
             throw new Exception("Введите логин, пароль и ФИО");
         }
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore
-        = true)]
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel
@@ -87,8 +92,7 @@ namespace SushiBarClientApp.Controllers
             if (!string.IsNullOrEmpty(login) && !string.IsNullOrEmpty(password)
             && !string.IsNullOrEmpty(fio))
             {
-                APIClient.PostRequest("api/client/register", new
-                ClientBindingModel
+                APIClient.PostRequest("api/client/register", new ClientBindingModel
                 {
                     ClientFIO = fio,
                     Email = login,
@@ -102,8 +106,7 @@ namespace SushiBarClientApp.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            ViewBag.Sushis =
-            APIClient.GetRequest<List<SushiViewModel>>("api/main/getproductlist");
+            ViewBag.Sushi = APIClient.GetRequest<List<SushiViewModel>>("api/main/getsushilist");
             return View();
         }
         [HttpPost]
@@ -125,8 +128,7 @@ namespace SushiBarClientApp.Controllers
         [HttpPost]
         public decimal Calc(decimal count, int sushi)
         {
-            SushiViewModel sush =
-        APIClient.GetRequest<SushiViewModel>($"api/main/getproduct?productId={sushi}");
+            SushiViewModel sush = APIClient.GetRequest<SushiViewModel>($"api/main/getsushi?sushiId={sushi}");
             return count * sush.Price;
         }
     }

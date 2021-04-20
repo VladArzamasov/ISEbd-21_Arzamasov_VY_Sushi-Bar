@@ -16,70 +16,74 @@ namespace AbstractSushiBarDatabaseImplement.Implements
             using (var context = new AbstractSushiBarDatabase())
             {
                 return context.Sushi
-                .Include(rec => rec.SushiComponents)
-               .ThenInclude(rec => rec.Component)
-               .ToList()
-               .Select(rec => new SushiViewModel
-               {
-                   Id = rec.Id,
-                   SushiName = rec.SushiName,
-                   Price = rec.Price,
-                   SushiComponents = rec.SushiComponents
-                .ToDictionary(recPC => recPC.ComponentId, recPC =>
-               (recPC.Component?.ComponentName, recPC.Count))
-               })
-               .ToList();
+                    .Include(rec => rec.SushiComponents)
+                    .ThenInclude(rec => rec.Component)
+                    .ToList().Select(rec => new SushiViewModel
+                    {
+                        Id = rec.Id,
+                        SushiName = rec.SushiName,
+                        Price = rec.Price,
+                        SushiComponents = rec.SushiComponents
+                            .ToDictionary(recD => recD.ComponentId,
+                            recD => (recD.Component?.ComponentName, recD.Count))
+                    })
+                    .ToList();
             }
         }
+
         public List<SushiViewModel> GetFilteredList(SushiBindingModel model)
         {
             if (model == null)
             {
                 return null;
             }
+
             using (var context = new AbstractSushiBarDatabase())
             {
                 return context.Sushi
-                .Include(rec => rec.SushiComponents)
-               .ThenInclude(rec => rec.Component)
-               .Where(rec => rec.SushiName.Contains(model.SushiName))
-               .ToList()
-               .Select(rec => new SushiViewModel
-               {
-                   Id = rec.Id,
-                   SushiName = rec.SushiName,
-                   Price = rec.Price,
-                   SushiComponents = rec.SushiComponents
-                .ToDictionary(recPC => recPC.ComponentId, recPC =>
-                (recPC.Component?.ComponentName, recPC.Count))
-               })
-                .ToList();
+                    .Include(rec => rec.SushiComponents)
+                    .ThenInclude(rec => rec.Component)
+                    .Where(rec => rec.SushiName
+                    .Contains(model.SushiName))
+                    .ToList()
+                    .Select(rec => new SushiViewModel
+                    {
+                        Id = rec.Id,
+                        SushiName = rec.SushiName,
+                        Price = rec.Price,
+                        SushiComponents = rec.SushiComponents.ToDictionary(recED => recED.ComponentId, recED => (recED.Component?.ComponentName, recED.Count))
+                    })
+                    .ToList();
             }
         }
+
         public SushiViewModel GetElement(SushiBindingModel model)
         {
             if (model == null)
             {
                 return null;
             }
+
             using (var context = new AbstractSushiBarDatabase())
             {
-                var sushi = context.Sushi
-                .Include(rec => rec.SushiComponents)
-               .ThenInclude(rec => rec.Component)
-               .FirstOrDefault(rec => rec.SushiName.Equals(model.SushiName) || rec.Id == model.Id);
-                return sushi != null ?
-                new SushiViewModel
-                {
-                    Id = sushi.Id,
-                    SushiName = sushi.SushiName,
-                    Price = sushi.Price,
-                    SushiComponents = sushi.SushiComponents
-                .ToDictionary(recPC => recPC.ComponentId, recPC =>
-               (recPC.Component?.ComponentName, recPC.Count))
-                } : null;
+                var Sushi = context.Sushi
+                    .Include(rec => rec.SushiComponents)
+                    .ThenInclude(rec => rec.Component)
+                    .FirstOrDefault(rec => rec.SushiName == model.SushiName || rec.Id == model.Id);
+
+                return Sushi != null ?
+                    new SushiViewModel
+                    {
+                        Id = Sushi.Id,
+                        SushiName = Sushi.SushiName,
+                        Price = Sushi.Price,
+                        SushiComponents = Sushi.SushiComponents
+                            .ToDictionary(recED => recED.ComponentId, recED => (recED.Component?.ComponentName, recED.Count))
+                    } :
+                    null;
             }
         }
+
         public void Insert(SushiBindingModel model)
         {
             using (var context = new AbstractSushiBarDatabase())
@@ -88,20 +92,21 @@ namespace AbstractSushiBarDatabaseImplement.Implements
                 {
                     try
                     {
-                        Sushi sushi = CreateModel(model, new Sushi());
-                        context.Sushi.Add(sushi);
+                        CreateModel(model, new Sushi(), context);
                         context.SaveChanges();
-                        CreateModel(model, sushi, context);
+
                         transaction.Commit();
                     }
                     catch
                     {
                         transaction.Rollback();
+
                         throw;
                     }
                 }
             }
         }
+
         public void Update(SushiBindingModel model)
         {
             using (var context = new AbstractSushiBarDatabase())
@@ -111,27 +116,33 @@ namespace AbstractSushiBarDatabaseImplement.Implements
                     try
                     {
                         var element = context.Sushi.FirstOrDefault(rec => rec.Id == model.Id);
+
                         if (element == null)
                         {
                             throw new Exception("Элемент не найден");
                         }
+
                         CreateModel(model, element, context);
                         context.SaveChanges();
+
                         transaction.Commit();
                     }
                     catch
                     {
                         transaction.Rollback();
+
                         throw;
                     }
                 }
             }
         }
+
         public void Delete(SushiBindingModel model)
         {
             using (var context = new AbstractSushiBarDatabase())
             {
                 Sushi element = context.Sushi.FirstOrDefault(rec => rec.Id == model.Id);
+
                 if (element != null)
                 {
                     context.Sushi.Remove(element);
@@ -143,45 +154,52 @@ namespace AbstractSushiBarDatabaseImplement.Implements
                 }
             }
         }
-        private Sushi CreateModel(SushiBindingModel model, Sushi sushi) 
+
+        private Sushi CreateModel(SushiBindingModel model, Sushi Sushi, AbstractSushiBarDatabase context)
         {
-            sushi.SushiName = model.SushiName;
-            sushi.Price = model.Price;
-            return sushi;
-        }
-        private Sushi CreateModel(SushiBindingModel model, Sushi sushi, AbstractSushiBarDatabase context)
-        {
-            sushi.SushiName = model.SushiName;
-            sushi.Price = model.Price;
-            if (model.Id.HasValue)
+            Sushi.SushiName = model.SushiName;
+            Sushi.Price = model.Price;
+
+            if (Sushi.Id == 0)
             {
-                var sushiComponents = context.SushiComponents.Where(rec =>
-               rec.SushiId == model.Id.Value).ToList();
-                // удалили те, которых нет в модели
-                context.SushiComponents.RemoveRange(sushiComponents.Where(rec =>
-               !model.SushiComponents.ContainsKey(rec.ComponentId)).ToList());
-                context.SaveChanges();
-                // обновили количество у существующих записей
-                foreach (var updateComponent in sushiComponents)
-                {
-                    updateComponent.Count =
-                   model.SushiComponents[updateComponent.ComponentId].Item2;
-                    model.SushiComponents.Remove(updateComponent.ComponentId);
-                }
+                context.Sushi.Add(Sushi);
                 context.SaveChanges();
             }
-            // добавили новые
-            foreach (var sc in model.SushiComponents)
+
+            if (model.Id.HasValue)
+            {
+                var SushiComponents = context.SushiComponents
+                    .Where(rec => rec.SushiId == model.Id.Value)
+                    .ToList();
+
+                context.SushiComponents
+                    .RemoveRange(SushiComponents
+                        .Where(rec => !model.SushiComponents
+                            .ContainsKey(rec.ComponentId))
+                                .ToList());
+                context.SaveChanges();
+
+                foreach (var updateDetail in SushiComponents)
+                {
+                    updateDetail.Count = model.SushiComponents[updateDetail.ComponentId].Item2;
+                    model.SushiComponents.Remove(updateDetail.ComponentId);
+                }
+
+                context.SaveChanges();
+            }
+
+            foreach (var ed in model.SushiComponents)
             {
                 context.SushiComponents.Add(new SushiComponent
                 {
-                    SushiId = sushi.Id,
-                    ComponentId = sc.Key,
-                    Count = sc.Value.Item2
+                    SushiId = Sushi.Id,
+                    ComponentId = ed.Key,
+                    Count = ed.Value.Item2
                 });
-                    context.SaveChanges();
+                context.SaveChanges();
             }
-            return sushi;
+
+            return Sushi;
         }
     }
 }

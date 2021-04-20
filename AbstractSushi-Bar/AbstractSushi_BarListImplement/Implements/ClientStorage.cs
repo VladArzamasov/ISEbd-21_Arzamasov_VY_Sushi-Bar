@@ -84,7 +84,7 @@ namespace AbstractSushi_BarListImplement.Implements
             }
             if (tempClient == null)
             {
-                throw new Exception("Элемент не найден");
+                throw new Exception("Клиент не найден");
             }
             CreateModel(model, tempClient);
         }
@@ -99,7 +99,7 @@ namespace AbstractSushi_BarListImplement.Implements
                     return;
                 }
             }
-            throw new Exception("Элемент не найден");
+            throw new Exception("Клиент не найден");
         }
 
         private Client CreateModel(ClientBindingModel model, Client client)

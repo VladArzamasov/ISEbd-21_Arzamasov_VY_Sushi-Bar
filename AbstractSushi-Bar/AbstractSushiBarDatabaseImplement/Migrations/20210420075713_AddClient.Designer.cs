@@ -4,14 +4,16 @@ using AbstractSushiBarDatabaseImplement;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AbstractSushiBarDatabaseImplement.Migrations
 {
     [DbContext(typeof(AbstractSushiBarDatabase))]
-    partial class AbstractSushiBarDatabaseModelSnapshot : ModelSnapshot
+    [Migration("20210420075713_AddClient")]
+    partial class AddClient
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

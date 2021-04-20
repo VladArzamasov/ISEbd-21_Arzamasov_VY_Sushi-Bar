@@ -31,20 +31,11 @@ namespace AbstractSushi_BarListImplement.Implements
                 return null;
             }
             List<OrderViewModel> result = new List<OrderViewModel>();
-            if (model.DateTo != null && model.DateFrom != null)
-            {
-                foreach (var order in source.Orders)
-                {
-                    if (order.DateCreate >= model.DateTo && order.DateCreate <= model.DateFrom)
-                    {
-                        result.Add(CreateModel(order));
-                    }
-                }
-                return result;
-            }
             foreach (var order in source.Orders)
             {
-                if (order.SushiId.ToString().Contains(model.SushiId.ToString()))
+                if ((!model.DateFrom.HasValue && !model.DateTo.HasValue && order.DateCreate.Date == model.DateCreate.Date)
+                    || (model.DateFrom.HasValue && model.DateTo.HasValue && order.DateCreate.Date >= model.DateFrom.Value.Date && order.DateCreate.Date <= model.DateTo.Value.Date)
+                    || (model.ClientId.HasValue && order.ClientId == model.ClientId))
                 {
                     result.Add(CreateModel(order));
                 }
@@ -59,8 +50,7 @@ namespace AbstractSushi_BarListImplement.Implements
             }
             foreach (var order in source.Orders)
             {
-                if (order.Id == model.Id || order.SushiId ==
-                    model.SushiId)
+                if (order.Id == model.Id || order.SushiId == model.SushiId)
                 {
                     return CreateModel(order);
                 }
@@ -120,26 +110,36 @@ namespace AbstractSushi_BarListImplement.Implements
         }
         private OrderViewModel CreateModel(Order order)
         {
-            string sushiName = null;
-            foreach (var sushi in source.Sushi)
-            {
-                if (sushi.Id == order.SushiId)
-                {
-                    sushiName = sushi.SushiName;
-                }
-            }
-            return new OrderViewModel
+            OrderViewModel tempOrder = new OrderViewModel
             {
                 Id = order.Id,
-                ClientId = order.ClientId,
-                SushiName = sushiName,
                 SushiId = order.SushiId,
+                ClientId = order.ClientId,
+                ClientFIO = string.Empty,
+                SushiName = string.Empty,
                 Count = order.Count,
                 Sum = order.Sum,
                 Status = order.Status,
                 DateCreate = order.DateCreate,
                 DateImplement = order.DateImplement
             };
+            foreach (var sushi in source.Sushi)
+            {
+                if (sushi.Id == order.SushiId)
+                {
+                    tempOrder.SushiName = sushi.SushiName;
+                    break;
+                }
+            }
+            foreach (var client in source.Clients)
+            {
+                if (client.Id == order.ClientId)
+                {
+                    tempOrder.ClientFIO = client.ClientFIO;
+                    break;
+                }
+            }
+            return tempOrder;
         }
     }
 }

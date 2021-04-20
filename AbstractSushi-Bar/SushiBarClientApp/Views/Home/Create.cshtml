@@ -8,7 +8,7 @@
     <div class="row">
         <div class="col-4">Изделие:</div>
         <div class="col-8">
-            <select id="product" name="product" class="form-control" aspitems="@(new SelectList(@ViewBag.Products,"Id", "ProductName"))"></select>
+            <select id="sushi" name="sushi" class="form-control" asp-items="@(new SelectList(@ViewBag.Sushi,"Id", "SushiName"))"></select>
         </div>
     </div>
     <div class="row">
@@ -23,7 +23,7 @@
     </div>
     <div class="row">
         <div class="col-8"></div>
-        <div class="col-4"><input type="submit" value="Создать" class="btn btnprimary" /></div>
+        <div class="col-4"><input type="submit" value="Создать" class="btn btn-primary" /></div>
     </div>
 </form>
 <script>
@@ -35,12 +35,12 @@ check();
 });
 function check() {
 var count = $('#count').val();
-var product = $('#product').val();
-if (count && product) {
+var sushi = $('#sushi').val();
+if (count && sushi) {
 $.ajax({
 method: "POST",
 url: "/Home/Calc",
-data: { count: count, product: product },
+data: { count: count, sushi: sushi },
 success: function (result) {
 $("#sum").val(result);
 }
