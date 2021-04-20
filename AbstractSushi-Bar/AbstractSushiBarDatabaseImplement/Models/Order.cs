@@ -21,5 +21,6 @@ namespace AbstractSushiBarDatabaseImplement.Models
         public DateTime DateCreate { get; set; }
         public DateTime? DateImplement { get; set; }
         public virtual Sushi Sushi { get; set; }
+        public virtual Client Client { get; set; }
     }
 }

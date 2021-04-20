@@ -15,7 +15,10 @@ namespace AbstractSushiBarDatabaseImplement.Implements
         {
             using (var context = new AbstractSushiBarDatabase())
             {
-                return context.Orders.Include(rec => rec.Sushi).Select(rec => new OrderViewModel
+                return context.Orders
+                    .Include(rec => rec.Sushi)
+                    .Include(rec => rec.Client)
+                    .Select(rec => new OrderViewModel
                 {
                     Id = rec.Id,
                     SushiName = context.Sushi.FirstOrDefault(r => r.Id == rec.SushiId).SushiName,
@@ -61,17 +64,7 @@ namespace AbstractSushiBarDatabaseImplement.Implements
             {
                 return context.Orders
                 .Where(rec => rec.Id.Equals(model.Id))
-                .Select(rec => new OrderViewModel
-                {
-                    Id = rec.Id,
-                    SushiName = context.Sushi.FirstOrDefault(r => r.Id == rec.SushiId).SushiName,
-                    SushiId = rec.SushiId,
-                    Count = rec.Count,
-                    Sum = rec.Sum,
-                    Status = rec.Status,
-                    DateCreate = rec.DateCreate,
-                    DateImplement = rec.DateImplement
-                })
+                .Select()
                 .ToList();
             }
         }

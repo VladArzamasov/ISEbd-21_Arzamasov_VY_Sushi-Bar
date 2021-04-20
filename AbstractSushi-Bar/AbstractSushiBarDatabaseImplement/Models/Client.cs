@@ -18,6 +18,6 @@ namespace AbstractSushiBarDatabaseImplement.Models
         public string Password { get; set; }
 
         [ForeignKey("ClientId")]
-        public List<Order> Order { get; set; }
+        public virtual List<Order> Order { get; set; }
     }
 }
