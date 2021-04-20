@@ -21,7 +21,7 @@ namespace SushiBarRestApi.Controllers
             _main = main;
         }
         [HttpGet]
-        public List<SushiViewModel> GetSushitList() => _sushi.Read(null)?.ToList();
+        public List<SushiViewModel> GetSushiList() => _sushi.Read(null)?.ToList();
         [HttpGet]
         public SushiViewModel GetSushi(int sushiId) => _sushi.Read(new SushiBindingModel
         { Id = sushiId })?[0];
