@@ -30,14 +30,26 @@ namespace AbstractSushi_BarListImplement.Implements
             {
                 return null;
             }
-            return source.Orders
-            .Where(rec => (!model.DateFrom.HasValue && !model.DateTo.HasValue &&
-            rec.DateCreate.Date == model.DateCreate.Date) ||
-            (model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate.Date
-            >= model.DateFrom.Value.Date && rec.DateCreate.Date <= model.DateTo.Value.Date) ||
-            (model.ClientId.HasValue && rec.ClientId == model.ClientId))
-            .Select(CreateModel)
-            .ToList();
+            List<OrderViewModel> result = new List<OrderViewModel>();
+            if (model.DateTo != null && model.DateFrom != null)
+            {
+                foreach (var order in source.Orders)
+                {
+                    if (order.DateCreate >= model.DateTo && order.DateCreate <= model.DateFrom)
+                    {
+                        result.Add(CreateModel(order));
+                    }
+                }
+                return result;
+            }
+            foreach (var order in source.Orders)
+            {
+                if (order.SushiId.ToString().Contains(model.SushiId.ToString()))
+                {
+                    result.Add(CreateModel(order));
+                }
+            }
+            return result;
         }
         public OrderViewModel GetElement(OrderBindingModel model)
         {

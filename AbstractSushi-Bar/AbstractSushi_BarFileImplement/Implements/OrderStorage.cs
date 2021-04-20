@@ -52,12 +52,14 @@ namespace AbstractSushi_BarFileImplement.Implements
             {
                 return null;
             }
-            return sourse.Orders
-                .Where(rec => (model.ClientId.HasValue && rec.ClientId == model.ClientId) || (!model.DateFrom.HasValue && !model.DateTo.HasValue && rec.DateCreate == model.DateCreate) ||
-                 (model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate.Date
-                 >= model.DateFrom.Value.Date && rec.DateCreate.Date <= model.DateTo.Value.Date))
-                 .Select(CreateModel)
-                 .ToList();
+
+            if (model.DateTo != null && model.DateFrom != null)
+            {
+                return sourse.Orders.Where(rec => rec.DateCreate >= model.DateFrom && rec.DateCreate <= model.DateTo)
+                    .Select(CreateModel).ToList();
+            }
+            return sourse.Orders.Where(rec => rec.SushiId.ToString().Contains(model.SushiId.ToString()))
+                .Select(CreateModel).ToList();
         }
         public OrderViewModel GetElement(OrderBindingModel model)
         {
