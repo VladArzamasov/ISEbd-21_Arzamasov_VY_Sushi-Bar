@@ -36,13 +36,10 @@ namespace AbstractSushi_BarBusinessLogic.BusinessLogics
             }
         }
         // Иммитация работы исполнителя
-        private async void WorkerWorkAsync(ImplementerViewModel implementer,
-       List<OrderViewModel> orders)
+        private async void WorkerWorkAsync(ImplementerViewModel implementer, List<OrderViewModel> orders)
         {
             // ищем заказы, которые уже в работе (вдруг исполнителя прервали)
-            var runOrders = await Task.Run(() => _orderStorage.GetFilteredList(new
-           OrderBindingModel
-            { ImplementerId = implementer.Id }));
+            var runOrders = await Task.Run(() => _orderStorage.GetFilteredList(new OrderBindingModel { ImplementerId = implementer.Id }));
             foreach (var order in runOrders)
             {
                 // делаем работу заново
@@ -67,8 +64,7 @@ namespace AbstractSushi_BarBusinessLogic.BusinessLogics
                             ImplementerId = implementer.Id
                         });
                         // делаем работу
-                        Thread.Sleep(implementer.WorkingTime * rnd.Next(1, 5) *
-                        order.Count);
+                        Thread.Sleep(implementer.WorkingTime * rnd.Next(1, 5) * order.Count);
                         _orderLogic.FinishOrder(new ChangeStatusBindingModel
                         {
                             OrderId = order.Id
