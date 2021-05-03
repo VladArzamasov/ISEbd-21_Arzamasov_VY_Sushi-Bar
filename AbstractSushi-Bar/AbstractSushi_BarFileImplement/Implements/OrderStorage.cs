@@ -5,6 +5,7 @@ using AbstractSushi_BarFileImplement.Models;
 using AbstractSushi_BarBusinessLogic.BindingModels;
 using AbstractSushi_BarBusinessLogic.Interfaces;
 using AbstractSushi_BarBusinessLogic.ViewModels;
+using AbstractSushi_BarBusinessLogic.Enums;
 
 namespace AbstractSushi_BarFileImplement.Implements
 {
@@ -15,6 +16,7 @@ namespace AbstractSushi_BarFileImplement.Implements
         {
             order.ClientId = (int)model.ClientId;
             order.SushiId = model.SushiId;
+            order.ImplementerId = model.ImplementerId;
             order.Count = model.Count;
             order.Sum = model.Sum;
             order.Status = model.Status;
@@ -28,8 +30,10 @@ namespace AbstractSushi_BarFileImplement.Implements
             {
                 Id = order.Id,
                 ClientId = order.ClientId,
+                ImplementerId = order.ImplementerId,
                 ClientFIO = sourse.Clients.FirstOrDefault(client => client.Id == order.ClientId)?.ClientFIO,
                 SushiName = sourse.Sushi.FirstOrDefault(rec => rec.Id == order.SushiId)?.SushiName,
+                ImplementerFIO = sourse.Implementers.FirstOrDefault(recImp => recImp.Id == order.ImplementerId)?.ImplementerFIO,
                 SushiId = order.SushiId,
                 Count = order.Count,
                 Sum = order.Sum,
@@ -55,7 +59,9 @@ namespace AbstractSushi_BarFileImplement.Implements
             return sourse.Orders
                 .Where(rec => (!model.DateFrom.HasValue && !model.DateTo.HasValue && rec.DateCreate.Date == model.DateCreate.Date)
                 || (model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate.Date >= model.DateFrom.Value.Date && rec.DateCreate.Date <= model.DateTo.Value.Date)
-                || (model.ClientId.HasValue && rec.ClientId == model.ClientId))
+                || (model.ClientId.HasValue && rec.ClientId == model.ClientId)
+                || (model.FreeOrders.HasValue && model.FreeOrders.Value && rec.Status == OrderStatus.Принят)
+                || (model.ImplementerId.HasValue && rec.ImplementerId == model.ImplementerId && rec.Status == OrderStatus.Выполняется))
                 .Select(CreateModel)
                 .ToList();
         }

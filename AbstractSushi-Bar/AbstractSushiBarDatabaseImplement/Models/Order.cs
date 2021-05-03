@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System;
 using AbstractSushi_BarBusinessLogic.Enums;
@@ -11,6 +10,7 @@ namespace AbstractSushiBarDatabaseImplement.Models
         public int Id { get; set; }
         public int ClientId { get; set; }
         public int SushiId { get; set; }
+        public int? ImplementerId { get; set; }
         [Required]
         public int Count { get; set; }
         [Required]
@@ -22,5 +22,6 @@ namespace AbstractSushiBarDatabaseImplement.Models
         public DateTime? DateImplement { get; set; }
         public virtual Sushi Sushi { get; set; }
         public virtual Client Client { get; set; }
+        public virtual Implementer Implementer { get; set; }
     }
 }

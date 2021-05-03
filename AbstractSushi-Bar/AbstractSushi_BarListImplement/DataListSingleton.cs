@@ -10,12 +10,14 @@ namespace AbstractSushi_BarListImplement
         public List<Order> Orders { get; set; }
         public List<Sushi> Sushi { get; set; }
         public List<Client> Clients { get; set; }
+        public List<Implementer> Implementers { get; set; }
         private DataListSingleton()
         {
             Components = new List<Component>();
             Orders = new List<Order>();
             Sushi = new List<Sushi>();
             Clients = new List<Client>();
+            Implementers = new List<Implementer>();
         }
         public static DataListSingleton GetInstance()
         {

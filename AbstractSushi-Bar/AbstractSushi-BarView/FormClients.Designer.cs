@@ -36,6 +36,7 @@
             // 
             // dataGridViewClients
             // 
+            this.dataGridViewClients.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
             this.dataGridViewClients.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewClients.Location = new System.Drawing.Point(-1, 0);
             this.dataGridViewClients.Name = "dataGridViewClients";

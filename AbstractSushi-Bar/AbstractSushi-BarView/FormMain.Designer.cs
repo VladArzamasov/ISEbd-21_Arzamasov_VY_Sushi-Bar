@@ -39,10 +39,10 @@
             this.OrdersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dataGridView = new System.Windows.Forms.DataGridView();
             this.buttonCreateOrder = new System.Windows.Forms.Button();
-            this.buttonTakeOrder = new System.Windows.Forms.Button();
-            this.buttonOrderReady = new System.Windows.Forms.Button();
             this.buttonPayOrder = new System.Windows.Forms.Button();
             this.buttonRef = new System.Windows.Forms.Button();
+            this.WorkStartToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ImplementersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuSushiBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.SuspendLayout();
@@ -53,7 +53,8 @@
             this.menuSushiBar.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.menuSushiBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.справочникиToolStripMenuItem,
-            this.отчетыToolStripMenuItem});
+            this.отчетыToolStripMenuItem,
+            this.WorkStartToolStripMenuItem});
             this.menuSushiBar.Location = new System.Drawing.Point(0, 0);
             this.menuSushiBar.Name = "menuSushiBar";
             this.menuSushiBar.Size = new System.Drawing.Size(1264, 33);
@@ -65,7 +66,8 @@
             this.справочникиToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.компонентыToolStripMenuItem,
             this.изделияToolStripMenuItem,
-            this.ClientsToolStripMenuItem});
+            this.ClientsToolStripMenuItem,
+            this.ImplementersToolStripMenuItem});
             this.справочникиToolStripMenuItem.Name = "справочникиToolStripMenuItem";
             this.справочникиToolStripMenuItem.Size = new System.Drawing.Size(139, 29);
             this.справочникиToolStripMenuItem.Text = "Справочники";
@@ -143,26 +145,6 @@
             this.buttonCreateOrder.UseVisualStyleBackColor = true;
             this.buttonCreateOrder.Click += new System.EventHandler(this.buttonCreateOrder_Click);
             // 
-            // buttonTakeOrder
-            // 
-            this.buttonTakeOrder.Location = new System.Drawing.Point(1007, 114);
-            this.buttonTakeOrder.Name = "buttonTakeOrder";
-            this.buttonTakeOrder.Size = new System.Drawing.Size(204, 30);
-            this.buttonTakeOrder.TabIndex = 3;
-            this.buttonTakeOrder.Text = "Отдать на выполнение";
-            this.buttonTakeOrder.UseVisualStyleBackColor = true;
-            this.buttonTakeOrder.Click += new System.EventHandler(this.buttonTakeOrder_Click);
-            // 
-            // buttonOrderReady
-            // 
-            this.buttonOrderReady.Location = new System.Drawing.Point(1007, 162);
-            this.buttonOrderReady.Name = "buttonOrderReady";
-            this.buttonOrderReady.Size = new System.Drawing.Size(204, 30);
-            this.buttonOrderReady.TabIndex = 4;
-            this.buttonOrderReady.Text = "Заказ готов";
-            this.buttonOrderReady.UseVisualStyleBackColor = true;
-            this.buttonOrderReady.Click += new System.EventHandler(this.buttonOrderReady_Click);
-            // 
             // buttonPayOrder
             // 
             this.buttonPayOrder.Location = new System.Drawing.Point(1007, 212);
@@ -183,6 +165,20 @@
             this.buttonRef.UseVisualStyleBackColor = true;
             this.buttonRef.Click += new System.EventHandler(this.buttonRef_Click);
             // 
+            // WorkStartToolStripMenuItem
+            // 
+            this.WorkStartToolStripMenuItem.Name = "WorkStartToolStripMenuItem";
+            this.WorkStartToolStripMenuItem.Size = new System.Drawing.Size(136, 29);
+            this.WorkStartToolStripMenuItem.Text = "Запуск работ";
+            this.WorkStartToolStripMenuItem.Click += new System.EventHandler(this.WorkStartToolStripMenuItem_Click);
+            // 
+            // ImplementersToolStripMenuItem
+            // 
+            this.ImplementersToolStripMenuItem.Name = "ImplementersToolStripMenuItem";
+            this.ImplementersToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.ImplementersToolStripMenuItem.Text = "Исполнители";
+            this.ImplementersToolStripMenuItem.Click += new System.EventHandler(this.ImplementersToolStripMenuItem_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -190,8 +186,6 @@
             this.ClientSize = new System.Drawing.Size(1264, 386);
             this.Controls.Add(this.buttonRef);
             this.Controls.Add(this.buttonPayOrder);
-            this.Controls.Add(this.buttonOrderReady);
-            this.Controls.Add(this.buttonTakeOrder);
             this.Controls.Add(this.buttonCreateOrder);
             this.Controls.Add(this.dataGridView);
             this.Controls.Add(this.menuSushiBar);
@@ -215,8 +209,6 @@
         private System.Windows.Forms.ToolStripMenuItem изделияToolStripMenuItem;
         private System.Windows.Forms.DataGridView dataGridView;
         private System.Windows.Forms.Button buttonCreateOrder;
-        private System.Windows.Forms.Button buttonTakeOrder;
-        private System.Windows.Forms.Button buttonOrderReady;
         private System.Windows.Forms.Button buttonPayOrder;
         private System.Windows.Forms.Button buttonRef;
         private System.Windows.Forms.ToolStripMenuItem отчетыToolStripMenuItem;
@@ -224,6 +216,8 @@
         private System.Windows.Forms.ToolStripMenuItem ComponentSushiToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem OrdersToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ClientsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ImplementersToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem WorkStartToolStripMenuItem;
     }
 }
 
