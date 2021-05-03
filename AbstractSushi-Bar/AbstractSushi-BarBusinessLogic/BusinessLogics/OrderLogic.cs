@@ -97,7 +97,7 @@ namespace AbstractSushi_BarBusinessLogic.BusinessLogics
                 DateImplement = order.DateImplement,
                 Status = OrderStatus.Готов,
                 ClientId = order.ClientId,
-                ImplementerId = model.ImplementerId
+                ImplementerId = order.ImplementerId
             });
         }
         public void PayOrder(ChangeStatusBindingModel model)
