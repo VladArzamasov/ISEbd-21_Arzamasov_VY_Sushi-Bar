@@ -1,5 +1,6 @@
 ﻿using AbstractSushi_BarBusinessLogic.BindingModels;
 using AbstractSushi_BarBusinessLogic.Enums;
+using AbstractSushi_BarBusinessLogic.HelperModels;
 using AbstractSushi_BarBusinessLogic.Interfaces;
 using AbstractSushi_BarBusinessLogic.ViewModels;
 using System;
@@ -10,10 +11,12 @@ namespace AbstractSushi_BarBusinessLogic.BusinessLogics
     public class OrderLogic
     {
         private readonly IOrderStorage _orderStorage;
+        private readonly IClientStorage _clientStorage;
         private readonly object locker = new object();
-        public OrderLogic(IOrderStorage orderStorage)
+        public OrderLogic(IOrderStorage orderStorage, IClientStorage clientStorage)
         {
             _orderStorage = orderStorage;
+            _clientStorage = clientStorage;
         }
         public List<OrderViewModel> Read(OrderBindingModel model)
         {
@@ -37,6 +40,15 @@ namespace AbstractSushi_BarBusinessLogic.BusinessLogics
                 DateCreate = DateTime.Now,
                 Status = OrderStatus.Принят,
                 ClientId = model.ClientID
+            });
+            MailLogic.MailSendAsync(new MailSendInfo
+            {
+                MailAddress = _clientStorage.GetElement(new ClientBindingModel
+                {
+                    Id = model.ClientID
+                })?.Email,
+                Subject = $"Новый заказ",
+                Text = $"Заказ от {DateTime.Now} на сумму {model.Sum:N2} принят."
             });
         }
         public void TakeOrderInWork(ChangeStatusBindingModel model)
@@ -71,6 +83,15 @@ namespace AbstractSushi_BarBusinessLogic.BusinessLogics
                     Status = OrderStatus.Выполняется,
                     ClientId = order.ClientId
                 });
+                MailLogic.MailSendAsync(new MailSendInfo
+                {
+                    MailAddress = _clientStorage.GetElement(new ClientBindingModel
+                    {
+                        Id = order.ClientId
+                    })?.Email,
+                    Subject = $"Заказ №{order.Id}",
+                    Text = $"Заказ №{order.Id} передан в работу."
+                });
             }
         }
         public void FinishOrder(ChangeStatusBindingModel model)
@@ -99,6 +120,15 @@ namespace AbstractSushi_BarBusinessLogic.BusinessLogics
                 ClientId = order.ClientId,
                 ImplementerId = order.ImplementerId
             });
+            MailLogic.MailSendAsync(new MailSendInfo
+            {
+                MailAddress = _clientStorage.GetElement(new ClientBindingModel
+                {
+                    Id = order.ClientId
+                })?.Email,
+                Subject = $"Заказ №{order.Id}",
+                Text = $"Заказ №{order.Id} выполнен."
+            });
         }
         public void PayOrder(ChangeStatusBindingModel model)
         {
@@ -125,6 +155,15 @@ namespace AbstractSushi_BarBusinessLogic.BusinessLogics
                 Status = OrderStatus.Оплачен,
                 ClientId = order.ClientId,
                 ImplementerId = order.ImplementerId
+            });
+            MailLogic.MailSendAsync(new MailSendInfo
+            {
+                MailAddress = _clientStorage.GetElement(new ClientBindingModel
+                {
+                    Id = order.ClientId
+                })?.Email,
+                Subject = $"Заказ №{order.Id}",
+                Text = $"Заказ №{order.Id} оплачен."
             });
         }
     }

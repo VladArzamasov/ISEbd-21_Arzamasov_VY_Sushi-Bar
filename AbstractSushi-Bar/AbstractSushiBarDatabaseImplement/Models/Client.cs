@@ -19,5 +19,8 @@ namespace AbstractSushiBarDatabaseImplement.Models
 
         [ForeignKey("ClientId")]
         public virtual List<Order> Order { get; set; }
+
+        [ForeignKey("ClientId")]
+        public virtual List<MessageInfo> MessageInfo { get; set; }
     }
 }
