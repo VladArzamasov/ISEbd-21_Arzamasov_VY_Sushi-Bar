@@ -1,6 +1,7 @@
 using AbstractSushi_BarBusinessLogic.BusinessLogics;
 using AbstractSushi_BarBusinessLogic.Interfaces;
 using AbstractSushiBarDatabaseImplement.Implements;
+using AbstractSushi_BarBusinessLogic.HelperModels;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -24,9 +25,18 @@ namespace SushiBarRestApi
             services.AddTransient<IClientStorage, ClientStorage>();
             services.AddTransient<IOrderStorage, OrderStorage>();
             services.AddTransient<ISushiStorage, SushiStorage>();
+            services.AddTransient<IMessageInfoStorage, MessageInfoStorage>();
             services.AddTransient<OrderLogic>();
             services.AddTransient<ClientLogic>();
             services.AddTransient<SushiLogic>();
+            services.AddTransient<MailLogic>();
+            MailLogic.MailConfig(new MailConfig
+            {
+                SmtpClientHost = "smtp.gmail.com",
+                SmtpClientPort = 587,
+                MailLogin = "emailforlab7@gmail.com",
+                MailPassword = "9fG-BWP-Geq-fcr",
+            });
             services.AddControllers().AddNewtonsoftJson();
         }
 

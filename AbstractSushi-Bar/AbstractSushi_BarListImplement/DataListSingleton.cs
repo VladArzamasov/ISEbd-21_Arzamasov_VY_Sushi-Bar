@@ -11,6 +11,7 @@ namespace AbstractSushi_BarListImplement
         public List<Sushi> Sushi { get; set; }
         public List<Client> Clients { get; set; }
         public List<Implementer> Implementers { get; set; }
+        public List<MessageInfo> MessageInfoes { get; set; }
         private DataListSingleton()
         {
             Components = new List<Component>();
@@ -18,6 +19,7 @@ namespace AbstractSushi_BarListImplement
             Sushi = new List<Sushi>();
             Clients = new List<Client>();
             Implementers = new List<Implementer>();
+            MessageInfoes = new List<MessageInfo>();
         }
         public static DataListSingleton GetInstance()
         {

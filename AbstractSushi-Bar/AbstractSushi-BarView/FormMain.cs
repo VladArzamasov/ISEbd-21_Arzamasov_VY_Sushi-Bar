@@ -123,5 +123,11 @@ namespace AbstractSushi_BarView
             workModeling.DoWork();
             LoadData();
         }
+
+        private void MailsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Container.Resolve<FormMails>();
+            form.ShowDialog();
+        }
     }
 }
