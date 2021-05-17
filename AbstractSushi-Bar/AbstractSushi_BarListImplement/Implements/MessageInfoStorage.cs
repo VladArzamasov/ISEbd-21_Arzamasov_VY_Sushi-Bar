@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace AbstractSushi_BarListImplement.Implements
 {
-    public class MessageInfoStorage
+    public class MessageInfoStorage : IMessageInfoStorage
     {
         private readonly DataListSingleton source;
 

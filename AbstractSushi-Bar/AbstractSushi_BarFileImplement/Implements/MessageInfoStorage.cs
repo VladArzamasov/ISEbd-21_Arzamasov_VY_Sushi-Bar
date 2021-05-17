@@ -8,7 +8,7 @@ using AbstractSushi_BarFileImplement.Models;
 
 namespace AbstractSushi_BarFileImplement.Implements
 {
-    public class MessageInfoStorage
+    public class MessageInfoStorage : IMessageInfoStorage
     {
         private readonly FileDataListSingleton source;
 
