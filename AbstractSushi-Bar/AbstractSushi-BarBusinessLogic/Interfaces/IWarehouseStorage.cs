@@ -19,5 +19,6 @@ namespace AbstractSushi_BarBusinessLogic.Interfaces
         void Update(WarehouseBindingModel model);
 
         void Delete(WarehouseBindingModel model);
+        bool CheckAndTake(int count, Dictionary<int, (string, int)> components);
     }
 }

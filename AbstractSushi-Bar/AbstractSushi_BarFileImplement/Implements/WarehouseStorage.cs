@@ -1,31 +1,27 @@
 ﻿using AbstractSushi_BarBusinessLogic.BindingModels;
 using AbstractSushi_BarBusinessLogic.Interfaces;
 using AbstractSushi_BarBusinessLogic.ViewModels;
-using AbstractSushi_BarListImplement.Models;
+using AbstractSushi_BarFileImplement.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
-namespace AbstractSushi_BarListImplement.Implements
+namespace AbstractSushi_BarFileImplement.Implements
 {
     public class WarehouseStorage : IWarehouseStorage
     {
-        private readonly DataListSingleton source;
+        private readonly FileDataListSingleton source;
 
         public WarehouseStorage()
         {
-            source = DataListSingleton.GetInstance();
+            source = FileDataListSingleton.GetInstance();
         }
 
         public List<WarehouseViewModel> GetFullList()
         {
-            List<WarehouseViewModel> result = new List<WarehouseViewModel>();
-            foreach (var warehouse in source.Warehouses)
-            {
-                result.Add(CreateModel(warehouse));
-            }
-            return result;
+            return source.Warehouses
+                .Select(CreateModel)
+                .ToList();
         }
 
         public List<WarehouseViewModel> GetFilteredList(WarehouseBindingModel model)
@@ -34,16 +30,10 @@ namespace AbstractSushi_BarListImplement.Implements
             {
                 return null;
             }
-
-            List<WarehouseViewModel> result = new List<WarehouseViewModel>();
-            foreach (var warehouse in source.Warehouses)
-            {
-                if (warehouse.WarehouseName.Contains(model.WarehouseName))
-                {
-                    result.Add(CreateModel(warehouse));
-                }
-            }
-            return result;
+            return source.Warehouses
+                .Where(rec => rec.WarehouseName.Contains(model.WarehouseName))
+                .Select(CreateModel)
+                .ToList();
         }
 
         public WarehouseViewModel GetElement(WarehouseBindingModel model)
@@ -52,70 +42,49 @@ namespace AbstractSushi_BarListImplement.Implements
             {
                 return null;
             }
-
-            foreach (var warehouse in source.Warehouses)
-            {
-                if (warehouse.Id == model.Id || warehouse.WarehouseName == model.WarehouseName)
-                {
-                    return CreateModel(warehouse);
-                }
-            }
-            return null;
+            var warehouse = source.Warehouses.FirstOrDefault(rec => rec.WarehouseName == model.WarehouseName || rec.Id == model.Id);
+            return warehouse != null ? CreateModel(warehouse) : null;
         }
 
         public void Insert(WarehouseBindingModel model)
         {
-            Warehouse tempWarehouse = new Warehouse
+            int maxId = source.Warehouses.Count > 0 ? source.Warehouses.Max(rec => rec.Id) : 0;
+            var warehouse = new Warehouse
             {
-                Id = 1,
+                Id = maxId + 1,
                 WarehouseComponents = new Dictionary<int, int>(),
                 DateCreate = DateTime.Now
             };
-            foreach (var warehouse in source.Warehouses)
-            {
-                if (warehouse.Id >= tempWarehouse.Id)
-                {
-                    tempWarehouse.Id = warehouse.Id + 1;
-                }
-            }
-            source.Warehouses.Add(CreateModel(model, tempWarehouse));
+            source.Warehouses.Add(CreateModel(model, warehouse));
         }
 
         public void Update(WarehouseBindingModel model)
         {
-            Warehouse tempWarehouse = null;
-            foreach (var warehouse in source.Warehouses)
-            {
-                if (warehouse.Id == model.Id)
-                {
-                    tempWarehouse = warehouse;
-                }
-            }
-            if (tempWarehouse == null)
+            var warehouse = source.Warehouses.FirstOrDefault(rec => rec.Id == model.Id);
+
+            if (warehouse == null)
             {
                 throw new Exception("Склад не найден");
             }
-            CreateModel(model, tempWarehouse);
+            CreateModel(model, warehouse);
         }
 
         public void Delete(WarehouseBindingModel model)
         {
-            for (int i = 0; i < source.Warehouses.Count; ++i)
+            var warehouse = source.Warehouses.FirstOrDefault(rec => rec.Id == model.Id);
+
+            if (warehouse == null)
             {
-                if (source.Warehouses[i].Id == model.Id)
-                {
-                    source.Warehouses.RemoveAt(i);
-                    return;
-                }
+                throw new Exception("Склад не найден");
             }
-            throw new Exception("Склад не найден");
+            source.Warehouses.Remove(warehouse);
         }
 
         private Warehouse CreateModel(WarehouseBindingModel model, Warehouse warehouse)
         {
             warehouse.WarehouseName = model.WarehouseName;
             warehouse.ResponsiblePersonFCS = model.ResponsiblePersonFCS;
-
+            // удаляем убранные
             foreach (var key in warehouse.WarehouseComponents.Keys.ToList())
             {
                 if (!model.WarehouseComponents.ContainsKey(key))
@@ -123,7 +92,7 @@ namespace AbstractSushi_BarListImplement.Implements
                     warehouse.WarehouseComponents.Remove(key);
                 }
             }
-
+            // обновляем существуюущие и добавляем новые
             foreach (var component in model.WarehouseComponents)
             {
                 if (warehouse.WarehouseComponents.ContainsKey(component.Key))
@@ -133,16 +102,15 @@ namespace AbstractSushi_BarListImplement.Implements
                 }
                 else
                 {
-                    warehouse.WarehouseComponents.Add(component.Key,
-                    model.WarehouseComponents[component.Key].Item2);
+                    warehouse.WarehouseComponents.Add(component.Key, model.WarehouseComponents[component.Key].Item2);
                 }
             }
-
             return warehouse;
         }
 
         private WarehouseViewModel CreateModel(Warehouse warehouse)
         {
+            // требуется дополнительно получить список компонентов для изделия с названиями и их количество
             Dictionary<int, (string, int)> warehouseComponents = new Dictionary<int, (string, int)>();
 
             foreach (var warehouseComponent in warehouse.WarehouseComponents)
@@ -158,7 +126,6 @@ namespace AbstractSushi_BarListImplement.Implements
                 }
                 warehouseComponents.Add(warehouseComponent.Key, (componentName, warehouseComponent.Value));
             }
-
             return new WarehouseViewModel
             {
                 Id = warehouse.Id,
@@ -169,29 +136,45 @@ namespace AbstractSushi_BarListImplement.Implements
             };
         }
 
-        public void Print()
-        {
-            foreach (Warehouse warehouse in source.Warehouses)
-            {
-                Console.WriteLine(warehouse.WarehouseName + " " + warehouse.ResponsiblePersonFCS + " " + warehouse.DateCreate);
-                foreach (KeyValuePair<int, int> keyValue in warehouse.WarehouseComponents)
-                {
-                    string componentName = null;
-                    foreach (var component in source.Components)
-                    {
-                        if (component.Id == keyValue.Key)
-                        {
-                            componentName = component.ComponentName;
-                            break;
-                        }
-                    }
-                    Console.WriteLine(componentName + " " + keyValue.Value);
-                }
-            }
-        }
         public bool CheckAndTake(int count, Dictionary<int, (string, int)> components)
         {
-            throw new NotImplementedException();
+            foreach (var component in components)
+            {
+                int requiredCount = component.Value.Item2 * count;
+                int availableCount = source.Warehouses
+                    .Where(rec => rec.WarehouseComponents.ContainsKey(component.Key))
+                    .Sum(rec => rec.WarehouseComponents[component.Key]);
+                if (availableCount < requiredCount)
+                {
+                    return false;
+                }
+            }
+            foreach (var component in components)
+            {
+                int requiredCount = component.Value.Item2 * count;
+                List<Warehouse> availableStoreHouses = source.Warehouses
+                    .Where(rec => rec.WarehouseComponents.ContainsKey(component.Key))
+                    .ToList();
+                foreach (var warehouse in availableStoreHouses)
+                {
+                    int availableCount = warehouse.WarehouseComponents[component.Key];
+                    if (availableCount <= requiredCount)
+                    {
+                        requiredCount = requiredCount - availableCount;
+                        warehouse.WarehouseComponents.Remove(component.Key);
+                    }
+                    else
+                    {
+                        warehouse.WarehouseComponents[component.Key] -= requiredCount;
+                        requiredCount = 0;
+                    }
+                    if (requiredCount == 0)
+                    {
+                        break;
+                    }
+                }
+            }
+            return true;
         }
     }
 }
