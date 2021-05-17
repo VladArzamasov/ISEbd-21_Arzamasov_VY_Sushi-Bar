@@ -34,12 +34,7 @@ namespace AbstractSushi_BarView
         {
             try
             {
-                var list = logic.Read(null);
-                if (list != null)
-                {
-                    dataGridViewClients.DataSource = list;
-                    dataGridViewClients.Columns[0].Visible = false;
-                }
+                Program.ConfigGrid(logic.Read(null), dataGridViewClients);
             }
             catch (Exception ex)
             {

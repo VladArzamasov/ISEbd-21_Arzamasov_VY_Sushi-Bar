@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using AbstractSushi_BarBusinessLogic.Attributes;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.Serialization;
 
@@ -8,13 +9,14 @@ namespace AbstractSushi_BarBusinessLogic.ViewModels
     [DataContract]
     public class SushiViewModel
     {
+        [Column(title: "Номер", width: 100, visible: false)]
         [DataMember]
         public int Id { get; set; }
         [DataMember]
-        [DisplayName("Название изделия")]
+        [Column(title: "Название изделия", gridViewAutoSize: GridViewAutoSize.Fill)]
         public string SushiName { get; set; }
         [DataMember]
-        [DisplayName("Цена")]
+        [Column(title: "Цена", width: 100)]
         public decimal Price { get; set; }
         [DataMember]
         public Dictionary<int, (string, int)> SushiComponents { get; set; }
