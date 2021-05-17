@@ -113,5 +113,17 @@ namespace AbstractSushi_BarView
         {
             LoadData();
         }
+
+        private void WarehouseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Container.Resolve<FormWarehouses>();
+            form.ShowDialog();
+        }
+
+        private void CompletionWarehouseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Container.Resolve<FormReplenishmentWarehouse>();
+            form.ShowDialog();
+        }
     }
 }

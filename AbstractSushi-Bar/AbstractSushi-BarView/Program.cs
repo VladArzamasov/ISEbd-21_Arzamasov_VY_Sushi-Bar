@@ -24,17 +24,16 @@ namespace AbstractSushi_BarView
         private static IUnityContainer BuildUnityContainer()
         {
             var currentContainer = new UnityContainer();
-            currentContainer.RegisterType<IComponentStorage, ComponentStorage>(new
-           HierarchicalLifetimeManager());
-            currentContainer.RegisterType<IOrderStorage, OrderStorage>(new
-           HierarchicalLifetimeManager());
-            currentContainer.RegisterType<ISushiStorage, SushiStorage>(new
-           HierarchicalLifetimeManager());
-            currentContainer.RegisterType<ComponentLogic>(new
-           HierarchicalLifetimeManager());
+            currentContainer.RegisterType<IComponentStorage, ComponentStorage>(new HierarchicalLifetimeManager());
+            currentContainer.RegisterType<IOrderStorage, OrderStorage>(new HierarchicalLifetimeManager());
+            currentContainer.RegisterType<ISushiStorage, SushiStorage>(new HierarchicalLifetimeManager());
+            currentContainer.RegisterType<IWarehouseStorage, WarehouseStorage>(new HierarchicalLifetimeManager());
+
+            currentContainer.RegisterType<ComponentLogic>(new HierarchicalLifetimeManager());
             currentContainer.RegisterType<OrderLogic>(new HierarchicalLifetimeManager());
-            currentContainer.RegisterType<SushiLogic>(new
-           HierarchicalLifetimeManager());
+            currentContainer.RegisterType<SushiLogic>(new HierarchicalLifetimeManager());
+            currentContainer.RegisterType<WarehouseLogic>(new HierarchicalLifetimeManager());
+
             return currentContainer;
         }
     }
