@@ -5,6 +5,7 @@ using AbstractSushi_BarBusinessLogic.ViewModels;
 using AbstractSushi_BarBusinessLogic.BindingModels;
 using System.Linq;
 using AbstractSushiBarDatabaseImplement.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace AbstractSushiBarDatabaseImplement.Implements
 {
@@ -14,7 +15,7 @@ namespace AbstractSushiBarDatabaseImplement.Implements
         {
             using (var context = new AbstractSushiBarDatabase())
             {
-                return context.Orders.Select(rec => new OrderViewModel
+                return context.Orders.Include(rec => rec.Sushi).Select(rec => new OrderViewModel
                 {
                     Id = rec.Id,
                     SushiName = context.Sushi.FirstOrDefault(r => r.Id == rec.SushiId).SushiName,
@@ -37,11 +38,12 @@ namespace AbstractSushiBarDatabaseImplement.Implements
             using (var context = new AbstractSushiBarDatabase())
             {
                 return context.Orders
-                .Where(rec => rec.Id.Equals(model.Id))
+                .Include(rec => rec.Sushi)
+                .Where(rec => rec.SushiId == model.SushiId)
                 .Select(rec => new OrderViewModel
                 {
                     Id = rec.Id,
-                    SushiName = context.Sushi.FirstOrDefault(r => r.Id == rec.SushiId).SushiName,
+                    SushiName = rec.Sushi.SushiName,
                     SushiId = rec.SushiId,
                     Count = rec.Count,
                     Sum = rec.Sum,
@@ -61,12 +63,13 @@ namespace AbstractSushiBarDatabaseImplement.Implements
             using (var context = new AbstractSushiBarDatabase())
             {
                 var order = context.Orders
+                .Include(rec => rec.Sushi)
                 .FirstOrDefault(rec => rec.Id == model.Id);
                 return order != null ?
                 new OrderViewModel
                 {
                     Id = order.Id,
-                    SushiName = context.Sushi.FirstOrDefault(r => r.Id == order.SushiId).SushiName,
+                    SushiName = order.Sushi.SushiName,
                     SushiId = order.SushiId,
                     Count = order.Count,
                     Sum = order.Sum,

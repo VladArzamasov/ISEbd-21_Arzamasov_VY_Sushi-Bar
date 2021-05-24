@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.buttonCancel = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.buttonSave = new System.Windows.Forms.Button();
             this.textBoxCount = new System.Windows.Forms.TextBox();
             this.comboBoxWarehouse = new System.Windows.Forms.ComboBox();
             this.comboBoxComponent = new System.Windows.Forms.ComboBox();
@@ -48,15 +48,15 @@
             this.buttonCancel.UseVisualStyleBackColor = true;
             this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
             // 
-            // button2
+            // buttonSave
             // 
-            this.button2.Location = new System.Drawing.Point(152, 129);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(110, 34);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "Сохранить";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.buttonSave_Click);
+            this.buttonSave.Location = new System.Drawing.Point(152, 129);
+            this.buttonSave.Name = "buttonSave";
+            this.buttonSave.Size = new System.Drawing.Size(110, 34);
+            this.buttonSave.TabIndex = 1;
+            this.buttonSave.Text = "Сохранить";
+            this.buttonSave.UseVisualStyleBackColor = true;
+            this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
             // 
             // textBoxCount
             // 
@@ -119,7 +119,7 @@
             this.Controls.Add(this.comboBoxComponent);
             this.Controls.Add(this.comboBoxWarehouse);
             this.Controls.Add(this.textBoxCount);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.buttonSave);
             this.Controls.Add(this.buttonCancel);
             this.Name = "FormReplenishmentWarehouse";
             this.Text = "Пополнение склада";
@@ -131,7 +131,7 @@
         #endregion
 
         private System.Windows.Forms.Button buttonCancel;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button buttonSave;
         private System.Windows.Forms.TextBox textBoxCount;
         private System.Windows.Forms.ComboBox comboBoxWarehouse;
         private System.Windows.Forms.ComboBox comboBoxComponent;
