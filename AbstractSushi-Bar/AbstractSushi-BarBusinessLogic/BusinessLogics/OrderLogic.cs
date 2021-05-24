@@ -10,9 +10,14 @@ namespace AbstractSushi_BarBusinessLogic.BusinessLogics
     public class OrderLogic
     {
         private readonly IOrderStorage _orderStorage;
-        public OrderLogic(IOrderStorage orderStorage)
+        private readonly ISushiStorage _sushiStorage;
+        private readonly IWarehouseStorage _warehouseStorage;
+
+        public OrderLogic(IOrderStorage orderStorage, ISushiStorage sushiStorage, IWarehouseStorage warehouseStorage)
         {
             _orderStorage = orderStorage;
+            _sushiStorage = sushiStorage;
+            _warehouseStorage = warehouseStorage;
         }
         public List<OrderViewModel> Read(OrderBindingModel model)
         {
@@ -50,6 +55,11 @@ namespace AbstractSushi_BarBusinessLogic.BusinessLogics
             if (order.Status != OrderStatus.Принят)
             {
                 throw new Exception("Заказ не в статусе \"Принят\"");
+            }
+            var components = _sushiStorage.GetElement(new SushiBindingModel { Id = order.SushiId }).SushiComponents;
+            if (!_warehouseStorage.CheckAndTake(order.Count, components))
+            {
+                throw new Exception("Для выполнения заказа не хвататет компонентов на складах");
             }
             _orderStorage.Update(new OrderBindingModel
             {
