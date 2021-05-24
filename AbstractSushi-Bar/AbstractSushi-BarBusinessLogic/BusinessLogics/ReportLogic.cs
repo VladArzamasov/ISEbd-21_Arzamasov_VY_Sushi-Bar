@@ -11,20 +11,19 @@ namespace AbstractSushi_BarBusinessLogic.BusinessLogics
 {
     public class ReportLogic
     {
-        private readonly IComponentStorage _componentStorage;
+        private readonly IWarehouseStorage _warehouseStorage;
         private readonly ISushiStorage _sushiStorage;
         private readonly IOrderStorage _orderStorage;
-        public ReportLogic(ISushiStorage sushiStorage, IComponentStorage
-       componentStorage, IOrderStorage orderStorage)
+        public ReportLogic(ISushiStorage sushiStorage, IWarehouseStorage
+       warehouseStorage, IOrderStorage orderStorage)
         {
             _sushiStorage = sushiStorage;
-            _componentStorage = componentStorage;
+            _warehouseStorage = warehouseStorage;
             _orderStorage = orderStorage;
         }
         // Получение списка компонент с указанием, в каких изделиях используются
         public List<ReportSushiComponentViewModel> GetSushiComponent()
         {
-            var components = _componentStorage.GetFullList();
             var sushis = _sushiStorage.GetFullList();
             var list = new List<ReportSushiComponentViewModel>();
             foreach (var sushi in sushis)
@@ -35,14 +34,10 @@ namespace AbstractSushi_BarBusinessLogic.BusinessLogics
                     Components = new List<Tuple<string, int>>(),
                     TotalCount = 0
                 };
-                foreach (var component in components)
+                foreach (var component in sushi.SushiComponents)
                 {
-                    if (sushi.SushiComponents.ContainsKey(component.Id))
-                    {
-                        record.Components.Add(new Tuple<string, int>(component.ComponentName,
-                       sushi.SushiComponents[component.Id].Item2));
-                        record.TotalCount += sushi.SushiComponents[component.Id].Item2;
-                    }
+                    record.Components.Add(new Tuple<string, int>(component.Value.Item1, component.Value.Item2));
+                    record.TotalCount += component.Value.Item2;
                 }
                 list.Add(record);
             }
@@ -65,6 +60,42 @@ namespace AbstractSushi_BarBusinessLogic.BusinessLogics
                 Status = ((OrderStatus)Enum.Parse(typeof(OrderStatus), x.Status.ToString())).ToString()
             })
            .ToList();
+        }
+        public List<ReportWarehouseComponentsViewModel> GetWarehouseComponent()
+        {
+            var warehouses = _warehouseStorage.GetFullList();
+
+            var list = new List<ReportWarehouseComponentsViewModel>();
+
+            foreach (var warehouse in warehouses)
+            {
+                var record = new ReportWarehouseComponentsViewModel
+                {
+                    WarehouseName = warehouse.WarehouseName,
+                    Components = new List<Tuple<string, int>>(),
+                    TotalCount = 0
+                };
+                foreach (var component in warehouse.WarehouseComponents)
+                {
+                    record.Components.Add(new Tuple<string, int>(component.Value.Item1, component.Value.Item2));
+                    record.TotalCount += component.Value.Item2;
+                }
+                list.Add(record);
+            }
+            return list;
+        }
+        public List<ReportOrderByDateViewModel> GetOrdersInfo()
+        {
+            return _orderStorage.GetFullList()
+                .GroupBy(order => order.DateCreate
+                .ToShortDateString())
+                .Select(rec => new ReportOrderByDateViewModel
+                {
+                    Date = Convert.ToDateTime(rec.Key),
+                    Count = rec.Count(),
+                    Sum = rec.Sum(order => order.Sum)
+                })
+                .ToList();
         }
         // Сохранение компонент в файл-Word
         public void SaveSushisToWordFile(ReportBindingModel model)
@@ -96,6 +127,35 @@ namespace AbstractSushi_BarBusinessLogic.BusinessLogics
                 DateFrom = model.DateFrom.Value,
                 DateTo = model.DateTo.Value,
                 Orders = GetOrders(model)
+            });
+        }
+        public void SaveWarehouseComponentsToExcel(ReportBindingModel model)
+        {
+            SaveToExcel.CreateDocForWarehouse(new ExcelInfoForWarehouse
+            {
+                FileName = model.FileName,
+                Title = "Список складов",
+                WarehouseComponents = GetWarehouseComponent()
+            });
+        }
+
+        public void SaveOrdersInfoToPdfFile(ReportBindingModel model)
+        {
+            SaveToPdf.CreateDocForWarehouse(new PdfInfoForOrder
+            {
+                FileName = model.FileName,
+                Title = "Список заказов",
+                Orders = GetOrdersInfo()
+            });
+        }
+
+        public void SaveWarehousesToWordFile(ReportBindingModel model)
+        {
+            SaveToWord.CreateDocForWarehouse(new WordInfoForWarehouse
+            {
+                FileName = model.FileName,
+                Title = "Список складов",
+                Warehouses = _warehouseStorage.GetFullList()
             });
         }
     }
