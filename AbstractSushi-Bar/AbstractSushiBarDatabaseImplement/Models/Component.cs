@@ -11,5 +11,7 @@ namespace AbstractSushiBarDatabaseImplement.Models
         public string ComponentName { get; set; }
         [ForeignKey("ComponentId")]
         public virtual List<SushiComponent> SushiComponents { get; set; }
+        [ForeignKey("ComponentId")]
+        public virtual List<WarehouseComponent> WarehouseComponents { get; set; }
     }
 }

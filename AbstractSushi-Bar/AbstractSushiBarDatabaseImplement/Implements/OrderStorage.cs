@@ -37,10 +37,8 @@ namespace AbstractSushiBarDatabaseImplement.Implements
             }
             using (var context = new AbstractSushiBarDatabase())
             {
-                return context.Orders.Include(rec => rec.Sushi)
-                .Where(rec => (!model.DateFrom.HasValue && !model.DateTo.HasValue && rec.DateCreate == model.DateCreate) ||
-                (model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate.Date
-                >= model.DateFrom.Value.Date && rec.DateCreate.Date <= model.DateTo.Value.Date))
+                return context.Orders
+                .Where(rec => rec.Id.Equals(model.Id))
                 .Select(rec => new OrderViewModel
                 {
                     Id = rec.Id,
@@ -63,7 +61,7 @@ namespace AbstractSushiBarDatabaseImplement.Implements
             }
             using (var context = new AbstractSushiBarDatabase())
             {
-                var order = context.Orders.Include(rec => rec.Sushi)
+                var order = context.Orders
                 .FirstOrDefault(rec => rec.Id == model.Id);
                 return order != null ?
                 new OrderViewModel

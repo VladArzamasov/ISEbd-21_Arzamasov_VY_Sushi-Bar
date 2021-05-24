@@ -42,6 +42,8 @@
             this.buttonOrderReady = new System.Windows.Forms.Button();
             this.buttonPayOrder = new System.Windows.Forms.Button();
             this.buttonRef = new System.Windows.Forms.Button();
+            this.CompletionWarehouseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.WarehouseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuSushiBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.SuspendLayout();
@@ -51,8 +53,7 @@
             this.menuSushiBar.GripMargin = new System.Windows.Forms.Padding(2, 2, 0, 2);
             this.menuSushiBar.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.menuSushiBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.справочникиToolStripMenuItem,
-            this.отчетыToolStripMenuItem});
+            this.справочникиToolStripMenuItem});
             this.menuSushiBar.Location = new System.Drawing.Point(0, 0);
             this.menuSushiBar.Name = "menuSushiBar";
             this.menuSushiBar.Size = new System.Drawing.Size(1264, 33);
@@ -63,7 +64,8 @@
             // 
             this.справочникиToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.компонентыToolStripMenuItem,
-            this.изделияToolStripMenuItem});
+            this.изделияToolStripMenuItem,
+            this.WarehouseToolStripMenuItem});
             this.справочникиToolStripMenuItem.Name = "справочникиToolStripMenuItem";
             this.справочникиToolStripMenuItem.Size = new System.Drawing.Size(139, 29);
             this.справочникиToolStripMenuItem.Text = "Справочники";
@@ -174,6 +176,20 @@
             this.buttonRef.UseVisualStyleBackColor = true;
             this.buttonRef.Click += new System.EventHandler(this.buttonRef_Click);
             // 
+            // CompletionWarehouseToolStripMenuItem
+            // 
+            this.CompletionWarehouseToolStripMenuItem.Name = "CompletionWarehouseToolStripMenuItem";
+            this.CompletionWarehouseToolStripMenuItem.Size = new System.Drawing.Size(189, 29);
+            this.CompletionWarehouseToolStripMenuItem.Text = "Пополнение склада";
+            this.CompletionWarehouseToolStripMenuItem.Click += new System.EventHandler(this.CompletionWarehouseToolStripMenuItem_Click);
+            // 
+            // WarehouseToolStripMenuItem
+            // 
+            this.WarehouseToolStripMenuItem.Name = "WarehouseToolStripMenuItem";
+            this.WarehouseToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.WarehouseToolStripMenuItem.Text = "Склады";
+            this.WarehouseToolStripMenuItem.Click += new System.EventHandler(this.WarehouseToolStripMenuItem_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -210,10 +226,6 @@
         private System.Windows.Forms.Button buttonOrderReady;
         private System.Windows.Forms.Button buttonPayOrder;
         private System.Windows.Forms.Button buttonRef;
-        private System.Windows.Forms.ToolStripMenuItem отчетыToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem ComponentsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem ComponentSushiToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem OrdersToolStripMenuItem;
     }
 }
 
