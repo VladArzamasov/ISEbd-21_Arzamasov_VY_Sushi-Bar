@@ -122,7 +122,7 @@
             this.Controls.Add(this.reportViewer);
             this.Name = "FormReportOrders";
             this.Text = "Заказы клиентов";
-            this.Click += new System.EventHandler(this.FormReportOrders_Load);
+            this.Load += new System.EventHandler(this.FormReportOrders_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.ResumeLayout(false);

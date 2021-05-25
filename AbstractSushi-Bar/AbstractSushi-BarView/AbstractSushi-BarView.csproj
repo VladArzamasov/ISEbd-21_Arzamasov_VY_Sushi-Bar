@@ -217,11 +217,23 @@
     <Compile Include="FormReportOrders.Designer.cs">
       <DependentUpon>FormReportOrders.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormReportOrdersByDate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormReportOrdersByDate.Designer.cs">
+      <DependentUpon>FormReportOrdersByDate.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormReportSushiComponents.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormReportSushiComponents.Designer.cs">
       <DependentUpon>FormReportSushiComponents.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormReportWarehouseComponents.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormReportWarehouseComponents.Designer.cs">
+      <DependentUpon>FormReportWarehouseComponents.cs</DependentUpon>
     </Compile>
     <Compile Include="FormSushi.cs">
       <SubType>Form</SubType>
@@ -271,8 +283,14 @@
     <EmbeddedResource Include="FormReportOrders.resx">
       <DependentUpon>FormReportOrders.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormReportOrdersByDate.resx">
+      <DependentUpon>FormReportOrdersByDate.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormReportSushiComponents.resx">
       <DependentUpon>FormReportSushiComponents.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormReportWarehouseComponents.resx">
+      <DependentUpon>FormReportWarehouseComponents.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormSushi.resx">
       <DependentUpon>FormSushi.cs</DependentUpon>
@@ -299,12 +317,36 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Report.rdlc" />
+    <EmbeddedResource Include="ReportViewerOrder.rdlc" />
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\AbstractSushi_BarBusinessLogic.BindingModels.ChangeStatusBindingModel.datasource" />
+    <None Include="Properties\DataSources\AbstractSushi_BarBusinessLogic.BindingModels.ComponentBindingModel.datasource" />
+    <None Include="Properties\DataSources\AbstractSushi_BarBusinessLogic.BindingModels.CreateOrderBindingModel.datasource" />
+    <None Include="Properties\DataSources\AbstractSushi_BarBusinessLogic.BindingModels.OrderBindingModel.datasource" />
+    <None Include="Properties\DataSources\AbstractSushi_BarBusinessLogic.BindingModels.ReportBindingModel.datasource" />
+    <None Include="Properties\DataSources\AbstractSushi_BarBusinessLogic.BindingModels.SushiBindingModel.datasource" />
+    <None Include="Properties\DataSources\AbstractSushi_BarBusinessLogic.BindingModels.WarehouseBindingModel.datasource" />
+    <None Include="Properties\DataSources\AbstractSushi_BarBusinessLogic.BindingModels.WarehouseReplenishmentBindingModel.datasource" />
+    <None Include="Properties\DataSources\AbstractSushi_BarBusinessLogic.BusinessLogics.ComponentLogic.datasource" />
+    <None Include="Properties\DataSources\AbstractSushi_BarBusinessLogic.BusinessLogics.OrderLogic.datasource" />
+    <None Include="Properties\DataSources\AbstractSushi_BarBusinessLogic.BusinessLogics.ReportLogic.datasource" />
+    <None Include="Properties\DataSources\AbstractSushi_BarBusinessLogic.BusinessLogics.SushiLogic.datasource" />
+    <None Include="Properties\DataSources\AbstractSushi_BarBusinessLogic.BusinessLogics.WarehouseLogic.datasource" />
+    <None Include="Properties\DataSources\AbstractSushi_BarBusinessLogic.HelperModels.ExcelInfoForWarehouse.datasource" />
+    <None Include="Properties\DataSources\AbstractSushi_BarBusinessLogic.HelperModels.PdfInfoForOrder.datasource" />
+    <None Include="Properties\DataSources\AbstractSushi_BarBusinessLogic.HelperModels.WordInfoForWarehouse.datasource" />
+    <None Include="Properties\DataSources\AbstractSushi_BarBusinessLogic.Interfaces.IComponentStorage.datasource" />
+    <None Include="Properties\DataSources\AbstractSushi_BarBusinessLogic.Interfaces.IOrderStorage.datasource" />
+    <None Include="Properties\DataSources\AbstractSushi_BarBusinessLogic.Interfaces.ISushiStorage.datasource" />
+    <None Include="Properties\DataSources\AbstractSushi_BarBusinessLogic.Interfaces.IWarehouseStorage.datasource" />
     <None Include="Properties\DataSources\AbstractSushi_BarBusinessLogic.ViewModels.ComponentViewModel.datasource" />
     <None Include="Properties\DataSources\AbstractSushi_BarBusinessLogic.ViewModels.OrderViewModel.datasource" />
+    <None Include="Properties\DataSources\AbstractSushi_BarBusinessLogic.ViewModels.ReportOrderByDateViewModel.datasource" />
     <None Include="Properties\DataSources\AbstractSushi_BarBusinessLogic.ViewModels.ReportOrdersViewModel.datasource" />
     <None Include="Properties\DataSources\AbstractSushi_BarBusinessLogic.ViewModels.ReportSushiComponentViewModel.datasource" />
+    <None Include="Properties\DataSources\AbstractSushi_BarBusinessLogic.ViewModels.ReportWarehouseComponentsViewModel.datasource" />
     <None Include="Properties\DataSources\AbstractSushi_BarBusinessLogic.ViewModels.SushiViewModel.datasource" />
+    <None Include="Properties\DataSources\AbstractSushi_BarBusinessLogic.ViewModels.WarehouseViewModel.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
