@@ -116,5 +116,47 @@ namespace AbstractSushi_BarView
         {
             LoadData();
         }
+
+        private void складыToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Container.Resolve<FormWarehouses>();
+            form.ShowDialog();
+        }
+
+        private void пополнениеСкладаToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Container.Resolve<FormWarehouse>();
+            form.ShowDialog();
+        }
+
+        private void списокИзделийToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void изделияПоКомпонентамToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void списокЗаказовToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void списокСкладовToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void списокКомпонентовПоСкладамToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void списокИнформацииОЗаказахToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
