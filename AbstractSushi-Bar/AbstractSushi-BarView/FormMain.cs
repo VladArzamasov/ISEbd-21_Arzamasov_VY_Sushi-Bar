@@ -131,32 +131,58 @@ namespace AbstractSushi_BarView
 
         private void списокИзделийToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            using (var dialog = new SaveFileDialog { Filter = "docx|*.docx" })
+            {
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    report.SaveSushisToWordFile(new ReportBindingModel
+                    {
+                        FileName = dialog.FileName
+                    });
+                    MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK,
+                   MessageBoxIcon.Information);
+                }
+            }
         }
 
         private void изделияПоКомпонентамToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            var form = Container.Resolve<FormReportSushiComponents>();
+            form.ShowDialog();
         }
 
         private void списокЗаказовToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            var form = Container.Resolve<FormReportOrders>();
+            form.ShowDialog();
         }
 
         private void списокСкладовToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            using (var dialog = new SaveFileDialog { Filter = "docx|*.docx" })
+            {
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    report.SaveWarehousesToWordFile(new ReportBindingModel
+                    {
+                        FileName = dialog.FileName
+                    });
+                    MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK,
+                   MessageBoxIcon.Information);
+                }
+            }
         }
 
         private void списокКомпонентовПоСкладамToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            var form = Container.Resolve<FormReportWarehouseComponents>();
+            form.ShowDialog();
         }
 
         private void списокИнформацииОЗаказахToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            var form = Container.Resolve<FormReportOrdersByDate>();
+            form.ShowDialog();
         }
     }
 }
